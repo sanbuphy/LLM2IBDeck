@@ -390,6 +390,12 @@ def render_title(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
 
 
 def render_summary(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    if theme.house == "mckinsey":
+        return render_summary_mckinsey(slide, theme, footer, slide_num)
+    if theme.house == "goldman":
+        return render_summary_goldman(slide, theme, footer, slide_num)
+    if theme.house == "cicc":
+        return render_summary_cicc(slide, theme, footer, slide_num)
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     bullets = slide.get("bullets", [])
     cols = 1 if theme.density == "board-readable" else min(2, max(1, math.ceil(len(bullets) / 3)))
@@ -419,6 +425,56 @@ def render_summary(slide: dict[str, Any], theme: Theme, footer: str, slide_num: 
     return slide_xml(parts)
 
 
+def render_summary_mckinsey(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    bullets = slide.get("bullets", [])
+    parts.append(shape_xml(sid, "Big Insight Panel", 0.78, 1.35, 4.0, 4.7, "FFFFFF", theme.secondary))
+    sid += 1
+    if bullets:
+        parts.append(text_box(sid, "Lead Insight", 1.02, 1.62, 3.45, 1.35, bullets[0], theme, 17, theme.primary, True, font_face=theme.title_font))
+        sid += 1
+    for idx, item in enumerate(bullets[1:5], start=1):
+        y = 1.55 + (idx - 1) * 1.1
+        parts.append(shape_xml(sid, f"McKinsey Number {idx}", 5.25, y, 0.34, 0.34, theme.secondary, None, f"{idx}", 10, "FFFFFF", True, "ctr", theme.font))
+        parts.append(text_box(sid + 1, f"McKinsey Proof {idx}", 5.78, y - 0.08, 6.2, 0.62, item, theme, 12, theme.ink))
+        sid += 2
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.78, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_summary_goldman(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    bullets = slide.get("bullets", [])
+    parts.append(shape_xml(sid, "Executive Summary Header", 0.42, 1.08, 12.48, 0.36, theme.secondary, None, "Executive summary", 10, "FFFFFF", True, "l", theme.font))
+    sid += 1
+    for idx, item in enumerate(bullets[:5]):
+        y = 1.55 + idx * 0.82
+        parts.append(shape_xml(sid, f"Goldman Row Rule {idx + 1}", 0.48, y + 0.68, 12.0, 0.01, theme.rule, None))
+        parts.append(text_box(sid + 1, f"Goldman Index {idx + 1}", 0.58, y, 0.42, 0.32, f"{idx + 1}", theme, 10, theme.secondary, True, "ctr"))
+        parts.append(text_box(sid + 2, f"Goldman Message {idx + 1}", 1.08, y - 0.04, 10.8, 0.48, item, theme, 11, theme.ink))
+        sid += 3
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.48, 6.78, 11.6, 0.2, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_summary_cicc(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    bullets = slide.get("bullets", [])
+    parts.append(shape_xml(sid, "Core View Label", 0.42, 1.08, 1.45, 0.36, theme.primary, None, "核心观点", 11, "FFFFFF", True, "ctr", theme.font))
+    parts.append(shape_xml(sid + 1, "Research Summary Panel", 0.42, 1.52, 12.1, 4.65, theme.light, theme.rule))
+    sid += 2
+    for idx, item in enumerate(bullets[:5]):
+        y = 1.72 + idx * 0.78
+        parts.append(shape_xml(sid, f"CICC Bullet {idx + 1}", 0.72, y + 0.03, 0.16, 0.16, theme.secondary, None))
+        parts.append(text_box(sid + 1, f"CICC Message {idx + 1}", 1.02, y - 0.06, 10.9, 0.42, item, theme, 11, theme.ink))
+        sid += 2
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.48, 6.78, 11.6, 0.2, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
 def render_two_column(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     columns = slide.get("columns", [])
@@ -433,6 +489,12 @@ def render_two_column(slide: dict[str, Any], theme: Theme, footer: str, slide_nu
 
 
 def render_table(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    if theme.house == "mckinsey":
+        return render_table_mckinsey(slide, theme, footer, slide_num)
+    if theme.house == "goldman":
+        return render_table_goldman(slide, theme, footer, slide_num)
+    if theme.house == "cicc":
+        return render_table_cicc(slide, theme, footer, slide_num)
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     headers = slide.get("headers", [])
     rows = slide.get("rows", [])
@@ -463,7 +525,84 @@ def render_table(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
     return slide_xml(parts)
 
 
+def render_table_mckinsey(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    headers = slide.get("headers", [])
+    rows = slide.get("rows", [])
+    y = 1.32
+    for idx, row in enumerate(rows[:4]):
+        x = 0.72 + (idx % 2) * 6.0
+        y = 1.42 + (idx // 2) * 2.25
+        heading = row[0] if row else f"Item {idx + 1}"
+        body = " | ".join(str(v) for v in row[1:]) if len(row) > 1 else ""
+        parts.append(shape_xml(sid, f"McKinsey Insight Card {idx + 1}", x, y, 5.35, 1.72, "FFFFFF", theme.rule, None, radius=True))
+        parts.append(shape_xml(sid + 1, f"McKinsey Card Rule {idx + 1}", x, y, 0.07, 1.72, theme.secondary, None))
+        parts.append(text_box(sid + 2, f"McKinsey Card Heading {idx + 1}", x + 0.22, y + 0.18, 4.8, 0.3, str(heading), theme, 13, theme.primary, True))
+        parts.append(text_box(sid + 3, f"McKinsey Card Body {idx + 1}", x + 0.22, y + 0.62, 4.8, 0.72, body, theme, 10, theme.ink))
+        sid += 4
+    if headers:
+        parts.append(text_box(sid, "McKinsey Exhibit Note", 0.72, 6.18, 11.4, 0.24, "Exhibit structured as insight cards rather than a dense table.", theme, 8, theme.muted))
+        sid += 1
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.72, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_table_goldman(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    headers = slide.get("headers", [])
+    rows = slide.get("rows", [])
+    cols = max(1, len(headers))
+    x0, y0, w = 0.42, 1.12, 12.48
+    col_w = w / cols
+    row_h = 0.38
+    parts.append(shape_xml(sid, "Goldman Table Top Rule", x0, y0 - 0.06, w, 0.03, theme.secondary, None))
+    sid += 1
+    for c, header in enumerate(headers):
+        parts.append(shape_xml(sid, f"Goldman Header {c + 1}", x0 + c * col_w, y0, col_w, row_h, theme.primary, "FFFFFF", header, 8, "FFFFFF", True, "l", theme.font))
+        sid += 1
+    for r, row in enumerate(rows):
+        for c in range(cols):
+            fill = "FFFFFF" if r % 2 == 0 else "F4F7FB"
+            value = row[c] if c < len(row) else ""
+            parts.append(shape_xml(sid, f"Goldman Cell {r + 1}-{c + 1}", x0 + c * col_w, y0 + (r + 1) * row_h, col_w, row_h, fill, theme.rule, value, 7, theme.ink, False, "l", theme.font))
+            sid += 1
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.42, 6.78, 11.6, 0.2, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_table_cicc(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    headers = slide.get("headers", [])
+    rows = slide.get("rows", [])
+    cols = max(1, len(headers))
+    x0, y0, w = 0.42, 1.1, 12.48
+    col_w = w / cols
+    row_h = 0.38
+    parts.append(shape_xml(sid, "CICC Table Label", x0, y0 - 0.46, 1.55, 0.3, theme.primary, None, "图表", 9, "FFFFFF", True, "ctr", theme.font))
+    sid += 1
+    for c, header in enumerate(headers):
+        parts.append(shape_xml(sid, f"CICC Header {c + 1}", x0 + c * col_w, y0, col_w, row_h, theme.primary, theme.secondary, header, 8, "FFFFFF", True, "l", theme.font))
+        sid += 1
+    for r, row in enumerate(rows):
+        for c in range(cols):
+            fill = "FFFFFF" if r % 2 == 0 else "F8F2E6"
+            value = row[c] if c < len(row) else ""
+            parts.append(shape_xml(sid, f"CICC Cell {r + 1}-{c + 1}", x0 + c * col_w, y0 + (r + 1) * row_h, col_w, row_h, fill, theme.rule, value, 7, theme.ink, False, "l", theme.font))
+            sid += 1
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.42, 6.78, 11.6, 0.2, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
 def render_chart(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    if theme.house == "mckinsey":
+        return render_chart_mckinsey(slide, theme, footer, slide_num)
+    if theme.house == "goldman":
+        return render_chart_goldman(slide, theme, footer, slide_num)
+    if theme.house == "cicc":
+        return render_chart_cicc(slide, theme, footer, slide_num)
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     cats = slide.get("categories", [])
     series = slide.get("series", [])
@@ -500,6 +639,115 @@ def render_chart(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
         sid += 2
     if slide.get("source"):
         parts.append(text_box(sid, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_chart_mckinsey(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    cats = slide.get("categories", [])
+    series = slide.get("series", [])
+    values = [float(v) for s in series for v in s.get("values", []) if isinstance(v, (int, float))]
+    max_v = max(values) if values else 1
+    lead_value = int(max_v)
+    parts.append(shape_xml(sid, "McKinsey Key Number Panel", 0.78, 1.34, 3.0, 4.95, "FFFFFF", theme.rule))
+    parts.append(text_box(sid + 1, "McKinsey Key Number", 1.08, 1.78, 2.4, 0.82, f"{lead_value}", theme, 34, theme.primary, True, "ctr", theme.title_font))
+    parts.append(text_box(sid + 2, "McKinsey Key Number Label", 1.02, 2.58, 2.5, 0.54, "indexed peak value", theme, 10, theme.muted, False, "ctr"))
+    sid += 3
+    x0, y0, chart_w, chart_h = 4.45, 1.55, 7.45, 4.35
+    parts.append(line_xml(sid, "McKinsey Axis", x0, y0 + chart_h, chart_w, theme.rule, 9525))
+    sid += 1
+    group_w = chart_w / max(1, len(cats))
+    colors = [theme.primary, theme.secondary, "7AA6C2"]
+    for ci, cat in enumerate(cats):
+        for si, serie in enumerate(series[:2]):
+            vals = serie.get("values", [])
+            val = float(vals[ci]) if ci < len(vals) and isinstance(vals[ci], (int, float)) else 0
+            bw = (group_w - 0.3) / max(1, len(series[:2]))
+            bh = (val / max_v) * (chart_h - 0.28)
+            bx = x0 + ci * group_w + 0.16 + si * bw
+            by = y0 + chart_h - bh
+            parts.append(shape_xml(sid, f"McKinsey Bar {ci + 1}-{si + 1}", bx, by, bw - 0.04, bh, colors[si], None))
+            sid += 1
+        parts.append(text_box(sid, f"McKinsey Category {ci + 1}", x0 + ci * group_w, y0 + chart_h + 0.12, group_w, 0.25, cat, theme, 8, theme.muted, False, "ctr"))
+        sid += 1
+    parts.append(text_box(sid, "McKinsey Exhibit Caption", 4.45, 1.18, 6.8, 0.24, "Exhibit uses a large synthesis callout plus simplified supporting chart.", theme, 8, theme.muted))
+    sid += 1
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.78, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_chart_goldman(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    cats = slide.get("categories", [])
+    series = slide.get("series", [])
+    values = [float(v) for s in series for v in s.get("values", []) if isinstance(v, (int, float))]
+    max_v = max(values) if values else 1
+    parts.append(shape_xml(sid, "Goldman Metrics Strip", 0.42, 1.08, 12.48, 0.46, theme.light, theme.secondary))
+    sid += 1
+    for idx, serie in enumerate(series[:3]):
+        vals = [v for v in serie.get("values", []) if isinstance(v, (int, float))]
+        metric = max(vals) if vals else 0
+        x = 0.62 + idx * 3.8
+        parts.append(text_box(sid, f"Goldman Metric {idx + 1}", x, 1.16, 0.85, 0.22, f"{metric:g}", theme, 12, theme.primary, True, "r"))
+        parts.append(text_box(sid + 1, f"Goldman Metric Label {idx + 1}", x + 0.95, 1.17, 2.35, 0.22, serie.get("name", f"Series {idx + 1}"), theme, 8, theme.muted))
+        sid += 2
+    x0, y0, row_h = 0.72, 1.88, 0.62
+    colors = [theme.primary, theme.secondary, theme.muted]
+    for ci, cat in enumerate(cats):
+        y = y0 + ci * row_h
+        parts.append(text_box(sid, f"Goldman Category {ci + 1}", x0, y, 1.18, 0.24, cat, theme, 8, theme.muted, False, "r"))
+        sid += 1
+        for si, serie in enumerate(series[:2]):
+            vals = serie.get("values", [])
+            val = float(vals[ci]) if ci < len(vals) and isinstance(vals[ci], (int, float)) else 0
+            bw = (val / max_v) * 8.4
+            by = y + 0.03 + si * 0.22
+            parts.append(shape_xml(sid, f"Goldman Horizontal Bar {ci + 1}-{si + 1}", 2.1, by, bw, 0.16, colors[si], None))
+            sid += 1
+    parts.append(line_xml(sid, "Goldman Chart Base Rule", 2.1, 6.05, 8.8, theme.rule, 9525))
+    sid += 1
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.42, 6.78, 11.6, 0.2, slide["source"], theme, theme.source_size, theme.muted))
+    return slide_xml(parts)
+
+
+def render_chart_cicc(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
+    parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
+    cats = slide.get("categories", [])
+    series = slide.get("series", [])
+    values = [float(v) for s in series for v in s.get("values", []) if isinstance(v, (int, float))]
+    max_v = max(values) if values else 1
+    parts.append(shape_xml(sid, "CICC Chart Label", 0.42, 1.08, 1.55, 0.3, theme.primary, None, "图表", 9, "FFFFFF", True, "ctr", theme.font))
+    sid += 1
+    x0, y0, chart_w, chart_h = 0.72, 1.65, 7.45, 3.65
+    parts.append(shape_xml(sid, "CICC Chart Panel", 0.42, 1.45, 8.2, 4.3, "FFFFFF", theme.rule))
+    parts.append(line_xml(sid + 1, "CICC Axis", x0, y0 + chart_h, chart_w, theme.rule, 9525))
+    sid += 2
+    group_w = chart_w / max(1, len(cats))
+    colors = [theme.primary, theme.secondary, "D7B56D"]
+    for ci, cat in enumerate(cats):
+        for si, serie in enumerate(series[:2]):
+            vals = serie.get("values", [])
+            val = float(vals[ci]) if ci < len(vals) and isinstance(vals[ci], (int, float)) else 0
+            bw = (group_w - 0.22) / max(1, len(series[:2]))
+            bh = (val / max_v) * (chart_h - 0.26)
+            bx = x0 + ci * group_w + 0.1 + si * bw
+            by = y0 + chart_h - bh
+            parts.append(shape_xml(sid, f"CICC Bar {ci + 1}-{si + 1}", bx, by, bw - 0.03, bh, colors[si], None))
+            sid += 1
+        parts.append(text_box(sid, f"CICC Category {ci + 1}", x0 + ci * group_w, y0 + chart_h + 0.08, group_w, 0.2, cat, theme, 7, theme.muted, False, "ctr"))
+        sid += 1
+    parts.append(shape_xml(sid, "CICC Side Table Header", 8.9, 1.45, 3.35, 0.36, theme.primary, theme.secondary, "核心假设", 8, "FFFFFF", True, "l", theme.font))
+    sid += 1
+    for idx, serie in enumerate(series[:3]):
+        vals = [v for v in serie.get("values", []) if isinstance(v, (int, float))]
+        max_metric = max(vals) if vals else 0
+        fill = "FFFFFF" if idx % 2 == 0 else "F8F2E6"
+        parts.append(shape_xml(sid, f"CICC Side Table Row {idx + 1}", 8.9, 1.81 + idx * 0.42, 3.35, 0.42, fill, theme.rule, f"{serie.get('name', '')}: {max_metric:g}", 7, theme.ink, False, "l", theme.font))
+        sid += 1
+    if slide.get("source"):
+        parts.append(text_box(sid, "Source", 0.42, 6.78, 11.6, 0.2, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
