@@ -55,6 +55,19 @@ Run all bundled examples and validate the generated PPTX packages:
 python3 scripts/test_examples.py
 ```
 
+Generate same-input comparison decks for McKinsey, Goldman, and CICC profiles:
+
+```bash
+python3 scripts/compare_named_styles.py
+```
+
+This writes:
+
+- `temp/style-comparison/mckinsey-inspired.pptx`
+- `temp/style-comparison/goldman-inspired.pptx`
+- `temp/style-comparison/cicc-inspired.pptx`
+- `temp/style-comparison/comparison_report.md`
+
 The test writes generated decks only under `temp/generated/`. It validates:
 
 - every bundled example spec in `banker-deck/assets/`

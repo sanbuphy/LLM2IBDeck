@@ -44,6 +44,7 @@ THEMES = {
         "tone": "action-title, quantified, diligence-oriented",
         "density": "banking-dense",
         "profile": "classic investment banking pitch book",
+        "house": "classic",
     },
     "mckinsey-inspired": {
         "bg": "FFFFFF",
@@ -70,6 +71,7 @@ THEMES = {
         "tone": "answer-first, synthesized, executive",
         "density": "consulting-medium",
         "profile": "public McKinsey-style consulting report direction",
+        "house": "mckinsey",
     },
     "goldman-inspired": {
         "bg": "FFFFFF",
@@ -96,6 +98,7 @@ THEMES = {
         "tone": "formal, market-facing, valuation-aware",
         "density": "banking-very-dense",
         "profile": "public Goldman-style institutional presentation direction",
+        "house": "goldman",
     },
     "cicc-inspired": {
         "bg": "FFFFFF",
@@ -122,6 +125,7 @@ THEMES = {
         "tone": "formal, research-note, source-forward",
         "density": "research-very-dense",
         "profile": "public CICC-style China research briefing direction",
+        "house": "cicc",
     },
     "boutique-dark": {
         "bg": "111827",
@@ -148,6 +152,7 @@ THEMES = {
         "tone": "sharp, founder-investor, thesis-led",
         "density": "modern-medium",
         "profile": "boutique growth advisory dark deck",
+        "house": "boutique",
     },
     "board-clean": {
         "bg": "FFFFFF",
@@ -174,6 +179,7 @@ THEMES = {
         "tone": "decision-oriented, plain-English, management",
         "density": "board-readable",
         "profile": "board and management discussion paper",
+        "house": "board",
     },
 }
 
@@ -204,6 +210,7 @@ class Theme:
     tone: str
     density: str
     profile: str
+    house: str
 
 
 def emu(inches: float) -> int:
@@ -297,21 +304,74 @@ def bullet_text(items: list[Any]) -> str:
 
 def base_decor(slide_num: int, title: str, footer: str, theme: Theme) -> tuple[list[str], int]:
     mx = theme.margin_x
+    header_fill = None
+    title_color = theme.primary
+    if theme.house in {"goldman", "cicc"}:
+        header_fill = theme.primary
+        title_color = "FFFFFF"
+    elif theme.house == "boutique":
+        title_color = theme.ink
     parts = [
         shape_xml(2, "Background", 0, 0, 13.333, 7.5, theme.bg, None),
-        text_box(3, "Action Title", mx, theme.title_y, 12.45 - mx, 0.62, title, theme, theme.title_size, theme.primary, True, font_face=theme.title_font),
-        line_xml(4, "Title Rule", mx, theme.rule_y, 12.6 - mx, theme.rule, theme.line_width),
-        text_box(5, "Footer", mx, theme.footer_y, 10.2, 0.22, footer, theme, theme.source_size, theme.muted),
-        text_box(6, "Page Number", 12.15, theme.footer_y, 0.5, 0.22, str(slide_num), theme, theme.source_size, theme.muted, False, "r"),
-        text_box(7, "Theme Profile Marker", 11.05, 7.25, 1.9, 0.13, f"{theme.profile} | {theme.density}", theme, 1, theme.bg),
     ]
-    return parts, 8
+    sid = 3
+    if header_fill:
+        parts.append(shape_xml(sid, "Institutional Header Band", 0, 0, 13.333, 0.96, header_fill, None))
+        sid += 1
+    if theme.house == "mckinsey":
+        parts.append(shape_xml(sid, "Consulting Left Rule", mx, theme.title_y + 0.04, 0.08, 0.55, theme.secondary, None))
+        sid += 1
+        title_x = mx + 0.18
+        title_w = 12.25 - title_x
+    else:
+        title_x = mx
+        title_w = 12.45 - mx
+    parts.extend([
+        text_box(sid, "Action Title", title_x, theme.title_y, title_w, 0.62, title, theme, theme.title_size, title_color, True, font_face=theme.title_font),
+        line_xml(sid + 1, "Title Rule", mx, theme.rule_y, 12.6 - mx, theme.secondary if header_fill else theme.rule, theme.line_width),
+        text_box(sid + 2, "Footer", mx, theme.footer_y, 10.2, 0.22, footer, theme, theme.source_size, theme.muted),
+        text_box(sid + 3, "Page Number", 12.15, theme.footer_y, 0.5, 0.22, str(slide_num), theme, theme.source_size, theme.muted, False, "r"),
+        text_box(sid + 4, "Theme Profile Marker", 10.65, 7.25, 2.3, 0.13, f"{theme.house} | {theme.profile} | {theme.density}", theme, 1, theme.bg),
+    ])
+    return parts, sid + 5
 
 
 def render_title(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
     title = slide.get("title", "Untitled Deck")
     subtitle = slide.get("subtitle", "")
     parts = [shape_xml(2, "Background", 0, 0, 13.333, 7.5, theme.bg, None)]
+    if theme.house == "goldman":
+        parts.extend([
+            shape_xml(3, "Goldman Cover Band", 0, 0, 13.333, 1.15, theme.primary, None),
+            shape_xml(4, "Goldman Gold Rule", 0, 1.15, 13.333, 0.05, theme.secondary, None),
+            text_box(5, "Deck Title", 0.72, 2.32, 10.8, 0.92, title, theme, theme.title_size + 10, theme.primary, True, font_face=theme.title_font),
+            text_box(6, "Deck Subtitle", 0.75, 3.22, 9.8, 0.42, subtitle, theme, theme.body_size + 2, theme.muted),
+            text_box(7, "Footer", 0.75, 6.96, 10.2, 0.25, footer, theme, theme.source_size + 1, theme.muted),
+            text_box(8, "Theme Profile Marker", 10.2, 7.25, 2.8, 0.13, f"{theme.house} | {theme.profile} | {theme.tone} | {theme.chart_style}", theme, 1, theme.bg),
+        ])
+        return slide_xml(parts)
+    if theme.house == "cicc":
+        parts.extend([
+            shape_xml(3, "CICC Cover Header", 0, 0, 13.333, 0.9, theme.primary, None),
+            shape_xml(4, "CICC Gold Rule", 0, 0.9, 13.333, 0.08, theme.secondary, None),
+            shape_xml(5, "CICC Warm Panel", 0.55, 1.55, 12.1, 4.55, theme.light, theme.rule),
+            text_box(6, "Deck Title", 0.82, 2.45, 10.8, 0.95, title, theme, theme.title_size + 10, theme.primary, True, font_face=theme.title_font),
+            text_box(7, "Deck Subtitle", 0.86, 3.35, 10.0, 0.45, subtitle, theme, theme.body_size + 2, theme.ink),
+            line_xml(8, "CICC Title Rule", 0.86, 4.02, 3.2, theme.secondary, 19050),
+            text_box(9, "Footer", 0.78, 6.95, 10.2, 0.25, footer, theme, theme.source_size + 1, theme.muted),
+            text_box(10, "Theme Profile Marker", 10.2, 7.25, 2.8, 0.13, f"{theme.house} | {theme.profile} | {theme.tone} | {theme.chart_style}", theme, 1, theme.bg),
+        ])
+        return slide_xml(parts)
+    if theme.house == "mckinsey":
+        parts.extend([
+            shape_xml(3, "McKinsey Blue Anchor", 0.72, 1.55, 0.1, 3.1, theme.secondary, None),
+            text_box(4, "Deck Title", 1.02, 2.08, 10.8, 1.05, title, theme, theme.title_size + 12, theme.primary, True, font_face=theme.title_font),
+            text_box(5, "Deck Subtitle", 1.04, 3.12, 9.4, 0.45, subtitle, theme, theme.body_size + 3, theme.muted),
+            line_xml(6, "Title Rule", 1.04, 3.86, 2.4, theme.secondary, 19050),
+            text_box(7, "Footer", 1.04, 6.95, 10.2, 0.25, footer, theme, theme.source_size + 1, theme.muted),
+            text_box(8, "Theme Profile Marker", 10.2, 7.25, 2.8, 0.13, f"{theme.house} | {theme.profile} | {theme.tone} | {theme.chart_style}", theme, 1, theme.bg),
+        ])
+        return slide_xml(parts)
     if theme.bg != "FFFFFF":
         title_color, subtitle_color = theme.ink, theme.muted
     else:
@@ -333,15 +393,25 @@ def render_summary(slide: dict[str, Any], theme: Theme, footer: str, slide_num: 
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     bullets = slide.get("bullets", [])
     cols = 1 if theme.density == "board-readable" else min(2, max(1, math.ceil(len(bullets) / 3)))
+    if theme.house == "mckinsey":
+        cols = 2
+    if theme.house in {"goldman", "cicc"} and len(bullets) >= 4:
+        cols = 2
     card_w = (11.95 - theme.margin_x) if cols == 1 else 5.85
     card_h = 1.02 if theme.density in {"board-readable", "consulting-medium"} else 0.84
+    if theme.house == "mckinsey":
+        card_h = 1.18
+    if theme.house in {"goldman", "cicc"}:
+        card_h = 0.76
     row_gap = 1.24 if card_h > 0.9 else 1.02
     for idx, item in enumerate(bullets):
         col = idx % cols
         row = idx // cols
         x = theme.margin_x + 0.13 + col * 6.05
         y = theme.body_y + row * row_gap
-        parts.append(shape_xml(sid, f"Message {idx + 1}", x, y, card_w, card_h, theme.light, theme.rule, str(item), theme.body_size, theme.ink, False, "l", theme.font, theme.density != "banking-very-dense"))
+        fill = "FFFFFF" if theme.house == "mckinsey" else theme.light
+        line = theme.secondary if theme.house in {"goldman", "cicc"} else theme.rule
+        parts.append(shape_xml(sid, f"Message {idx + 1}", x, y, card_w, card_h, fill, line, str(item), theme.body_size, theme.ink, False, "l", theme.font, theme.house not in {"goldman", "cicc"}))
         parts.append(shape_xml(sid + 1, f"Message Accent {idx + 1}", x, y, 0.06, card_h, theme.secondary, None))
         sid += 2
     if slide.get("source"):
@@ -372,11 +442,19 @@ def render_table(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
     col_w = w / cols
     row_h = h / total_rows
     for c, header in enumerate(headers):
-        parts.append(shape_xml(sid, f"Header {c + 1}", x0 + c * col_w, y0, col_w, row_h, theme.primary, "FFFFFF", header, max(8, theme.body_size - 1), "FFFFFF", True, "l", theme.font))
+        header_fill = theme.primary
+        if theme.house == "mckinsey":
+            header_fill = "FFFFFF"
+        header_color = theme.primary if theme.house == "mckinsey" else "FFFFFF"
+        parts.append(shape_xml(sid, f"Header {c + 1}", x0 + c * col_w, y0, col_w, row_h, header_fill, theme.secondary, header, max(8, theme.body_size - 1), header_color, True, "l", theme.font))
         sid += 1
     for r, row in enumerate(rows):
         for c in range(cols):
             fill = "FFFFFF" if r % 2 == 0 else theme.light
+            if theme.house == "goldman":
+                fill = "FFFFFF" if r % 2 == 0 else "F4F7FB"
+            if theme.house == "cicc":
+                fill = "FFFFFF" if r % 2 == 0 else "F8F2E6"
             value = row[c] if c < len(row) else ""
             parts.append(shape_xml(sid, f"Cell {r + 1}-{c + 1}", x0 + c * col_w, y0 + (r + 1) * row_h, col_w, row_h, fill, theme.rule, value, max(7, theme.body_size - 2), theme.ink, False, "l", theme.font))
             sid += 1
@@ -397,6 +475,12 @@ def render_chart(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
     group_w = chart_w / max(1, len(cats))
     bar_gap = 0.06
     colors = [theme.secondary, theme.accent, theme.primary]
+    if theme.house == "mckinsey":
+        colors = [theme.primary, theme.secondary, "7AA6C2"]
+    if theme.house == "goldman":
+        colors = [theme.primary, theme.secondary, theme.muted]
+    if theme.house == "cicc":
+        colors = [theme.primary, theme.secondary, "D7B56D"]
     for ci, cat in enumerate(cats):
         for si, serie in enumerate(series[:3]):
             vals = serie.get("values", [])
