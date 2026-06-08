@@ -35,9 +35,10 @@ Load only the reference files needed for the current request.
 Use the generator when the user asks for a concrete deck file.
 
 ```bash
+mkdir -p temp/generated
 python3 ibdeck/scripts/generate_ibdeck.py \
   --spec ibdeck/assets/sample_market_scan.json \
-  --output output/ibdeck_market_scan.pptx
+  --output temp/generated/ibdeck_market_scan.pptx
 ```
 
 The generator creates a real `.pptx` package using editable PowerPoint XML objects. Do not rasterize slides into images unless the user explicitly asks for image-only output.

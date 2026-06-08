@@ -1,0 +1,70 @@
+{
+  "title": "IPO Readiness Investor Update",
+  "subtitle": "Illustrative equity story and readiness deck generated with IBDeck",
+  "theme": "board-clean",
+  "footer": "IBDeck | IPO readiness discussion draft",
+  "slides": [
+    {
+      "type": "title",
+      "title": "IPO Readiness Investor Update",
+      "subtitle": "Equity story, financial profile, and readiness priorities"
+    },
+    {
+      "type": "summary",
+      "title": "Company is approaching IPO readiness, but margin consistency and reporting maturity remain gating items",
+      "bullets": [
+        "Revenue scale and category leadership are sufficient to support early investor education.",
+        "Gross margin and retention trajectory provide credible evidence for long-term model quality.",
+        "Public-company readiness should focus on forecasting cadence, KPI definitions, and control maturity.",
+        "Optimal timeline depends on two additional quarters of predictable growth and improved cash conversion."
+      ],
+      "source": "Source: Management placeholders; IBDeck analysis."
+    },
+    {
+      "type": "two_column",
+      "title": "Equity story should anchor on category leadership while directly addressing profitability questions",
+      "columns": [
+        {
+          "heading": "Investor positives",
+          "bullets": [
+            "Large addressable market with structural demand tailwinds",
+            "Recurring revenue model with improving retention",
+            "Clear path to margin expansion through operating leverage",
+            "Experienced management team and scalable platform"
+          ]
+        },
+        {
+          "heading": "Likely investor questions",
+          "bullets": [
+            "Durability of growth as company scales",
+            "Competitive intensity and pricing pressure",
+            "Timing of sustainable free cash flow",
+            "Quality and consistency of KPI reporting"
+          ]
+        }
+      ],
+      "source": "Source: IBDeck analysis."
+    },
+    {
+      "type": "chart",
+      "title": "Illustrative forecast shows transition from growth investment to balanced growth and margin expansion",
+      "chart_type": "bar",
+      "categories": ["2024A", "2025E", "2026E", "2027E"],
+      "series": [
+        {"name": "Revenue growth %", "values": [42, 34, 28, 24]},
+        {"name": "EBITDA margin %", "values": [-8, 2, 10, 17]}
+      ],
+      "source": "Note: Illustrative forecast. Source: IBDeck analysis."
+    },
+    {
+      "type": "roadmap",
+      "title": "IPO preparation should run as a 3-phase readiness program before formal launch",
+      "phases": [
+        {"name": "Diagnose", "period": "0-4 weeks", "items": ["Refresh equity story", "Assess controls and reporting gaps"]},
+        {"name": "Build", "period": "1-3 months", "items": ["Codify KPI definitions", "Prepare analyst education materials"]},
+        {"name": "Launch-ready", "period": "3-6 months", "items": ["Test forecast cadence", "Begin investor education when market window supports"]}
+      ],
+      "source": "Source: IBDeck analysis."
+    }
+  ]
+}

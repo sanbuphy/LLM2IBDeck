@@ -1,0 +1,59 @@
+{
+  "title": "Digital Infrastructure Industry Research",
+  "subtitle": "Illustrative sector primer generated with IBDeck",
+  "theme": "mckinsey-inspired",
+  "footer": "IBDeck | Industry research draft",
+  "slides": [
+    {
+      "type": "title",
+      "title": "Digital Infrastructure Industry Research",
+      "subtitle": "Market structure, growth drivers, and investment implications"
+    },
+    {
+      "type": "summary",
+      "title": "Digital infrastructure remains investable, but returns are shifting toward power-secure and contracted assets",
+      "bullets": [
+        "AI workloads are increasing demand for high-density capacity and reliable power access.",
+        "Capital intensity is rising as grid, cooling, and land constraints become more pronounced.",
+        "Contract quality and customer concentration will drive valuation dispersion.",
+        "Investors should separate platform scarcity value from project-level development risk."
+      ],
+      "source": "Source: Public industry sources; IBDeck analysis."
+    },
+    {
+      "type": "matrix",
+      "title": "Four structural themes should frame investment screening across the sector",
+      "headers": ["Theme", "Evidence to collect", "Investment implication"],
+      "rows": [
+        ["Power scarcity", "Grid capacity, PPA cost, interconnection queue", "Favors power-secure campuses"],
+        ["AI density", "Rack density, cooling design, capex per MW", "Raises technical diligence bar"],
+        ["Contract quality", "Tenant credit, term, escalators, utilization", "Separates durable cash flows"],
+        ["Platform scale", "Land bank, utility relationships, development team", "Supports premium valuation"]
+      ],
+      "source": "Source: IBDeck analysis."
+    },
+    {
+      "type": "chart",
+      "title": "Illustrative capital intensity rises as facilities shift toward AI-ready specifications",
+      "chart_type": "bar",
+      "categories": ["Legacy colo", "Hyperscale", "AI-ready"],
+      "series": [
+        {"name": "Capex index", "values": [100, 135, 180]},
+        {"name": "Power density index", "values": [100, 160, 260]}
+      ],
+      "source": "Note: Indexed illustrative view. Source: IBDeck analysis."
+    },
+    {
+      "type": "table",
+      "title": "Investment diligence should connect market thesis to asset-level underwriting assumptions",
+      "headers": ["Diligence area", "Key test", "Output"],
+      "rows": [
+        ["Demand", "Customer pipeline and pre-lease probability", "Absorption case"],
+        ["Power", "Availability, cost, reliability, renewable path", "Site risk score"],
+        ["Capex", "Cooling, electrical, construction cost benchmarks", "Development budget"],
+        ["Exit", "Comparable platform and asset transactions", "Valuation range"]
+      ],
+      "source": "Source: IBDeck analysis."
+    }
+  ]
+}

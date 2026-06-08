@@ -1,0 +1,59 @@
+{
+  "title": "Vertical SaaS M&A Target Profile",
+  "subtitle": "Illustrative acquisition screening deck generated with IBDeck",
+  "theme": "goldman-inspired",
+  "footer": "IBDeck | Illustrative M&A analysis",
+  "slides": [
+    {
+      "type": "title",
+      "title": "Vertical SaaS M&A Target Profile",
+      "subtitle": "Acquisition screening view for a healthcare software platform"
+    },
+    {
+      "type": "summary",
+      "title": "Target appears strategically attractive if revenue durability and enterprise expansion are validated",
+      "bullets": [
+        "Mission-critical workflow positioning supports high gross retention and pricing power.",
+        "Healthcare end-market digitization creates a multi-year growth runway across provider and payer customers.",
+        "Strategic fit depends on integration feasibility, data interoperability, and channel overlap.",
+        "Key diligence focus should be cohort retention, net revenue expansion, churn concentration, and security posture."
+      ],
+      "source": "Source: Company materials placeholder; public market data; IBDeck analysis."
+    },
+    {
+      "type": "table",
+      "title": "Illustrative financial profile shows premium growth with improving operating leverage",
+      "headers": ["Metric", "2023A", "2024A", "2025E", "Commentary"],
+      "rows": [
+        ["Revenue", "$82m", "$108m", "$142m", "31% 2023A-2025E CAGR"],
+        ["Gross margin", "74%", "76%", "77%", "Software-like margin profile"],
+        ["EBITDA margin", "8%", "14%", "20%", "Scaling S&M and G&A"],
+        ["Net revenue retention", "118%", "121%", "123%", "Expansion-led growth"]
+      ],
+      "source": "Note: Illustrative figures. Source: IBDeck analysis."
+    },
+    {
+      "type": "matrix",
+      "title": "Diligence should prioritize revenue quality, compliance, and integration risk",
+      "headers": ["Area", "Question", "Why it matters"],
+      "rows": [
+        ["Retention", "Are cohorts expanding after year two?", "Confirms durability of ARR base"],
+        ["Customer concentration", "Do top 10 customers exceed 30% of ARR?", "Frames downside risk"],
+        ["Compliance", "Are HIPAA/SOC2 controls audit-ready?", "Avoids closing and integration delays"],
+        ["Product integration", "How modern are APIs and data models?", "Determines synergy capture timing"]
+      ],
+      "source": "Source: IBDeck analysis."
+    },
+    {
+      "type": "chart",
+      "title": "Illustrative valuation range remains most sensitive to growth durability and margin path",
+      "chart_type": "bar",
+      "categories": ["Low", "Base", "High"],
+      "series": [
+        {"name": "EV / Revenue", "values": [5.5, 7.0, 8.5]},
+        {"name": "EV / ARR", "values": [5.0, 6.5, 8.0]}
+      ],
+      "source": "Note: Illustrative multiple range only. Source: IBDeck analysis."
+    }
+  ]
+}

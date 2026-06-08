@@ -1,0 +1,10 @@
+# Runtime and test artifacts
+temp/
+output/
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+# OS metadata
+.DS_Store

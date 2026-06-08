@@ -69,3 +69,9 @@ The generator accepts a JSON file with this structure.
 
 Unknown slide types fall back to a generic content slide with title and bullets.
 
+Bundled example specs live in `ibdeck/assets/`:
+
+- `sample_market_scan.json`
+- `finance_mna_target_profile.json`
+- `finance_ipo_investor_update.json`
+- `finance_industry_research.json`
