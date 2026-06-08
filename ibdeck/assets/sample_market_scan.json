@@ -1,0 +1,57 @@
+{
+  "title": "AI Data Centers in Southeast Asia",
+  "subtitle": "Illustrative market scan generated with IBDeck",
+  "theme": "ib-classic",
+  "footer": "IBDeck | Draft for discussion",
+  "slides": [
+    {
+      "type": "title",
+      "title": "AI Data Centers in Southeast Asia",
+      "subtitle": "Market scan and investment implications"
+    },
+    {
+      "type": "summary",
+      "title": "SEA AI data center demand is attractive, but near-term power access will separate winners from followers",
+      "bullets": [
+        "Hyperscale and AI workload growth are increasing demand for high-density, power-secure capacity.",
+        "Singapore constraints are pushing incremental demand toward Johor, Batam, Bangkok, Manila, and Ho Chi Minh City.",
+        "Investors should prioritize sites with contracted power, credible cooling design, and cloud/customer pre-commitments.",
+        "Key diligence gaps include grid queue position, land title, water access, and renewable procurement economics."
+      ],
+      "source": "Source: Public industry sources; company disclosures; IBDeck analysis."
+    },
+    {
+      "type": "chart",
+      "title": "Illustrative demand scenario shows accelerated capacity absorption under AI workload growth",
+      "chart_type": "bar",
+      "categories": ["2026E", "2027E", "2028E", "2029E", "2030E"],
+      "series": [
+        {"name": "Base demand", "values": [1.2, 1.6, 2.1, 2.7, 3.3]},
+        {"name": "AI upside", "values": [0.2, 0.5, 0.9, 1.3, 1.8]}
+      ],
+      "source": "Note: Illustrative GW demand scenario. Source: IBDeck analysis."
+    },
+    {
+      "type": "matrix",
+      "title": "Power, connectivity, and policy maturity are the primary market-selection filters",
+      "headers": ["Filter", "What to test", "Investment implication"],
+      "rows": [
+        ["Power availability", "Grid capacity, queue position, PPA path", "Prioritize power-secure campuses"],
+        ["Connectivity", "Fiber routes, cloud on-ramps, latency", "Screen for network density"],
+        ["Policy support", "Data sovereignty, tax incentives, permitting", "Avoid timing risk"],
+        ["Customer demand", "Anchor tenant pipeline and pre-leasing", "Reduce build-out speculation"]
+      ],
+      "source": "Source: IBDeck analysis."
+    },
+    {
+      "type": "roadmap",
+      "title": "Recommended next step is a focused 6-week site and partner diligence sprint",
+      "phases": [
+        {"name": "Screen", "period": "Week 1-2", "items": ["Shortlist 5-8 metro/site candidates", "Map power and fiber constraints"]},
+        {"name": "Validate", "period": "Week 3-4", "items": ["Engage utilities and landowners", "Test anchor customer demand"]},
+        {"name": "Decide", "period": "Week 5-6", "items": ["Compare economics", "Select entry route and partner shortlist"]}
+      ],
+      "source": "Source: IBDeck analysis."
+    }
+  ]
+}
