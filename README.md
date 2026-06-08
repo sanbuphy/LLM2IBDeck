@@ -59,6 +59,9 @@ The test writes generated decks only under `temp/generated/`. It validates:
 
 - every bundled example spec in `banker-deck/assets/`
 - every built-in theme, including `mckinsey-inspired`, `goldman-inspired`, and `cicc-inspired`
+- each theme profile's palette, font, density, tone, and layout marker inside the generated PPTX XML
 - PPTX package structure, slide count, and XML parseability
 
 `temp/` and `output/` are ignored by Git so runtime artifacts do not get committed.
+
+The named institution profiles are high-fidelity inspired profiles calibrated from public materials. They do not copy official logos, proprietary templates, or exact official slide masters.

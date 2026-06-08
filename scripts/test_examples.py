@@ -43,6 +43,28 @@ def validate_pptx(path: Path, expected_slides: int) -> None:
                 ET.fromstring(zf.read(name))
 
 
+def validate_theme_profile(path: Path, theme_name: str) -> None:
+    theme = THEMES[theme_name]
+    with zipfile.ZipFile(path) as zf:
+        xml_blob = "\n".join(
+            zf.read(name).decode("utf-8")
+            for name in zf.namelist()
+            if name.endswith(".xml")
+        )
+    required_tokens = [
+        theme["primary"],
+        theme["secondary"],
+        theme["font"],
+        theme["profile"],
+        theme["tone"],
+        theme["density"],
+        theme["chart_style"],
+    ]
+    for token in required_tokens:
+        if token not in xml_blob:
+            raise AssertionError(f"{path.name}: missing theme token for {theme_name}: {token}")
+
+
 def main() -> None:
     TEMP_OUTPUT.mkdir(parents=True, exist_ok=True)
     specs = sorted(ASSETS.glob("*.json"))
@@ -95,6 +117,7 @@ def main() -> None:
         output.parent.mkdir(parents=True, exist_ok=True)
         write_pptx(spec, output)
         validate_pptx(output, len(spec["slides"]))
+        validate_theme_profile(output, theme_name)
         print(f"ok theme {theme_name} -> {output.relative_to(ROOT)}")
 
     print(f"generated {len(specs)} example deck(s) and {len(THEMES)} theme smoke deck(s) under {TEMP_OUTPUT.relative_to(ROOT)}")

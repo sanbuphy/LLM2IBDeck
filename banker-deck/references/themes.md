@@ -1,6 +1,6 @@
 # BankerDeck Themes
 
-Themes are inspired by common consulting and investment banking deliverable patterns. They are not official brand templates and must not use proprietary logos or assets unless the user provides them.
+Themes are high-fidelity inspired profiles for common consulting and investment banking deliverable patterns. They are not official brand templates and must not use proprietary logos, marks, proprietary templates, or exact copied layouts unless the user owns and provides those assets.
 
 ## Public Reference Basis
 
@@ -10,7 +10,17 @@ Use public references as directional inputs, then adapt into original BankerDeck
 - Goldman Sachs: public brand guidance says the blue version of the Goldman Sachs signature should be used wherever possible; public investor materials emphasize a restrained institutional presentation style.
 - CICC: public annual reports and investor materials are table-forward, formal, and financial-data dense; public identity materials commonly present CICC with red/gold cues.
 
-Do not copy official templates, logos, marks, or proprietary layouts. Treat these as style references for theme calibration only.
+Do not copy official templates, logos, marks, or proprietary layouts. Treat these as style references for theme calibration only. The goal is: same professional genre, similar layout grammar and tone, original editable slides.
+
+## Fidelity Dimensions
+
+For named institution-inspired profiles, match these dimensions as closely as possible without copying official templates:
+
+- Layout grammar: margin system, title band, rule weight, chart/table placement, page density.
+- Typography hierarchy: action-title size, body size, source note size, Chinese/English font fallback.
+- Exhibit behavior: table density, chart palette order, header fills, use of callout boxes.
+- Banker/consultant tone: action titles, source-forward footers, quantified claims, diligence language.
+- Deck rhythm: title page, executive summary, analysis modules, recommendation/next steps, appendix.
 
 ## Theme IDs
 
@@ -28,18 +38,20 @@ Default banking deliverable style.
 Consulting-style executive presentation.
 
 - Palette: deep blue `#003A70`, bright blue `#00A3E0`, cool gray `#E6E9ED`, charcoal `#202124`.
-- Typography: clean sans-serif, more whitespace than classic banking.
+- Typography: clean sans-serif, larger action titles, more whitespace than classic banking.
 - Best for: strategy, market entry, operating model, transformation, board storyline.
-- Style: sharp action titles, light grids, large callout numbers.
+- Style: sharp answer-first titles, light grids, larger message boxes, consulting-medium density.
+- Tone: synthesized, executive, implication-led; avoid overpacked banker tables unless the content demands it.
 
 ### goldman-inspired
 
 Capital markets and investor-facing style.
 
 - Palette: dark navy `#0B1F3A`, steel `#637083`, gold `#C9A227`, pale blue `#E9F1FA`.
-- Typography: formal, compact, high contrast.
+- Typography: formal, compact, high contrast, small source notes.
 - Best for: M&A, financing, investor update, valuation, capital markets.
-- Style: crisp lines, premium restraint, gold accents used sparingly.
+- Style: crisp lines, premium restraint, gold accents used sparingly, capital-markets-compact density.
+- Tone: formal, market-facing, valuation-aware; emphasize ranges, sensitivities, comps, and diligence caveats.
 
 ### cicc-inspired
 
@@ -48,7 +60,8 @@ China investment research and advisory style.
 - Palette: red `#B20D1E`, gold `#B88900`, ink `#1F1F1F`, warm gray `#F5F1EA`.
 - Typography: Chinese/English compatible; use PingFang SC or Microsoft YaHei when Chinese text is present.
 - Best for: Chinese industry research, cross-border deals, policy/sector analysis.
-- Style: formal, table-forward, concise Chinese source footers.
+- Style: formal, table-forward, concise Chinese source footers, very dense research-note exhibits.
+- Tone: formal Chinese securities-research style; use `资料来源`, `注`, `核心观点`, `投资含义`, and risk/source caveats.
 
 ### boutique-dark
 

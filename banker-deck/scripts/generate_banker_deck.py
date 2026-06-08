@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 import json
 import math
-import os
 import zipfile
 from dataclasses import dataclass
 from pathlib import Path
@@ -30,6 +29,21 @@ THEMES = {
         "light": "F3F5F7",
         "rule": "D9E2EC",
         "font": "Aptos",
+        "title_font": "Aptos Display",
+        "title_size": 18,
+        "body_size": 12,
+        "source_size": 7,
+        "margin_x": 0.45,
+        "title_y": 0.25,
+        "rule_y": 0.92,
+        "body_y": 1.25,
+        "footer_y": 7.08,
+        "line_width": 12700,
+        "table_row_h": 0.48,
+        "chart_style": "banker-grid",
+        "tone": "action-title, quantified, diligence-oriented",
+        "density": "banking-dense",
+        "profile": "classic investment banking pitch book",
     },
     "mckinsey-inspired": {
         "bg": "FFFFFF",
@@ -41,6 +55,21 @@ THEMES = {
         "light": "E6E9ED",
         "rule": "CFD7E2",
         "font": "Arial",
+        "title_font": "Arial",
+        "title_size": 20,
+        "body_size": 12,
+        "source_size": 7,
+        "margin_x": 0.62,
+        "title_y": 0.28,
+        "rule_y": 0.98,
+        "body_y": 1.32,
+        "footer_y": 7.06,
+        "line_width": 9525,
+        "table_row_h": 0.56,
+        "chart_style": "consulting-white-space",
+        "tone": "answer-first, synthesized, executive",
+        "density": "consulting-medium",
+        "profile": "public McKinsey-style consulting report direction",
     },
     "goldman-inspired": {
         "bg": "FFFFFF",
@@ -52,6 +81,21 @@ THEMES = {
         "light": "E9F1FA",
         "rule": "D4DAE3",
         "font": "Arial",
+        "title_font": "Arial",
+        "title_size": 17,
+        "body_size": 11,
+        "source_size": 6,
+        "margin_x": 0.42,
+        "title_y": 0.22,
+        "rule_y": 0.84,
+        "body_y": 1.14,
+        "footer_y": 7.12,
+        "line_width": 12700,
+        "table_row_h": 0.42,
+        "chart_style": "capital-markets-compact",
+        "tone": "formal, market-facing, valuation-aware",
+        "density": "banking-very-dense",
+        "profile": "public Goldman-style institutional presentation direction",
     },
     "cicc-inspired": {
         "bg": "FFFFFF",
@@ -63,6 +107,21 @@ THEMES = {
         "light": "F5F1EA",
         "rule": "E3D6C1",
         "font": "Microsoft YaHei",
+        "title_font": "Microsoft YaHei",
+        "title_size": 17,
+        "body_size": 11,
+        "source_size": 6,
+        "margin_x": 0.42,
+        "title_y": 0.22,
+        "rule_y": 0.84,
+        "body_y": 1.12,
+        "footer_y": 7.12,
+        "line_width": 15240,
+        "table_row_h": 0.42,
+        "chart_style": "china-research-table-forward",
+        "tone": "formal, research-note, source-forward",
+        "density": "research-very-dense",
+        "profile": "public CICC-style China research briefing direction",
     },
     "boutique-dark": {
         "bg": "111827",
@@ -74,6 +133,21 @@ THEMES = {
         "light": "374151",
         "rule": "4B5563",
         "font": "Aptos",
+        "title_font": "Aptos Display",
+        "title_size": 19,
+        "body_size": 12,
+        "source_size": 7,
+        "margin_x": 0.55,
+        "title_y": 0.28,
+        "rule_y": 0.98,
+        "body_y": 1.28,
+        "footer_y": 7.06,
+        "line_width": 12700,
+        "table_row_h": 0.52,
+        "chart_style": "growth-equity-dark",
+        "tone": "sharp, founder-investor, thesis-led",
+        "density": "modern-medium",
+        "profile": "boutique growth advisory dark deck",
     },
     "board-clean": {
         "bg": "FFFFFF",
@@ -85,6 +159,21 @@ THEMES = {
         "light": "F8FAFC",
         "rule": "E5E7EB",
         "font": "Arial",
+        "title_font": "Arial",
+        "title_size": 19,
+        "body_size": 13,
+        "source_size": 7,
+        "margin_x": 0.62,
+        "title_y": 0.3,
+        "rule_y": 1.02,
+        "body_y": 1.35,
+        "footer_y": 7.05,
+        "line_width": 9525,
+        "table_row_h": 0.58,
+        "chart_style": "board-readable",
+        "tone": "decision-oriented, plain-English, management",
+        "density": "board-readable",
+        "profile": "board and management discussion paper",
     },
 }
 
@@ -100,6 +189,21 @@ class Theme:
     light: str
     rule: str
     font: str
+    title_font: str
+    title_size: int
+    body_size: int
+    source_size: int
+    margin_x: float
+    title_y: float
+    rule_y: float
+    body_y: float
+    footer_y: float
+    line_width: int
+    table_row_h: float
+    chart_style: str
+    tone: str
+    density: str
+    profile: str
 
 
 def emu(inches: float) -> int:
@@ -170,8 +274,8 @@ def shape_xml(
     """
 
 
-def text_box(shape_id: int, name: str, x: float, y: float, w: float, h: float, text: str, theme: Theme, size: int = 14, color: str | None = None, bold: bool = False, align: str = "l") -> str:
-    return shape_xml(shape_id, name, x, y, w, h, None, None, text, size, color or theme.ink, bold, align, theme.font)
+def text_box(shape_id: int, name: str, x: float, y: float, w: float, h: float, text: str, theme: Theme, size: int = 14, color: str | None = None, bold: bool = False, align: str = "l", font_face: str | None = None) -> str:
+    return shape_xml(shape_id, name, x, y, w, h, None, None, text, size, color or theme.ink, bold, align, font_face or theme.font)
 
 
 def line_xml(shape_id: int, name: str, x: float, y: float, w: float, color: str, width: int = 12700) -> str:
@@ -192,14 +296,16 @@ def bullet_text(items: list[Any]) -> str:
 
 
 def base_decor(slide_num: int, title: str, footer: str, theme: Theme) -> tuple[list[str], int]:
+    mx = theme.margin_x
     parts = [
         shape_xml(2, "Background", 0, 0, 13.333, 7.5, theme.bg, None),
-        text_box(3, "Action Title", 0.45, 0.25, 11.8, 0.58, title, theme, 18, theme.primary, True),
-        line_xml(4, "Title Rule", 0.45, 0.92, 12.15, theme.rule),
-        text_box(5, "Footer", 0.45, 7.08, 10.2, 0.22, footer, theme, 7, theme.muted),
-        text_box(6, "Page Number", 12.15, 7.08, 0.5, 0.22, str(slide_num), theme, 7, theme.muted, False, "r"),
+        text_box(3, "Action Title", mx, theme.title_y, 12.45 - mx, 0.62, title, theme, theme.title_size, theme.primary, True, font_face=theme.title_font),
+        line_xml(4, "Title Rule", mx, theme.rule_y, 12.6 - mx, theme.rule, theme.line_width),
+        text_box(5, "Footer", mx, theme.footer_y, 10.2, 0.22, footer, theme, theme.source_size, theme.muted),
+        text_box(6, "Page Number", 12.15, theme.footer_y, 0.5, 0.22, str(slide_num), theme, theme.source_size, theme.muted, False, "r"),
+        text_box(7, "Theme Profile Marker", 11.05, 7.25, 1.9, 0.13, f"{theme.profile} | {theme.density}", theme, 1, theme.bg),
     ]
-    return parts, 7
+    return parts, 8
 
 
 def render_title(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
@@ -213,10 +319,11 @@ def render_title(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
     parts.extend(
         [
             shape_xml(3, "Accent Bar", 0, 0, 0.18, 7.5, theme.secondary, None),
-            text_box(4, "Deck Title", 0.75, 2.35, 10.8, 0.95, title, theme, 30, title_color, True),
-            text_box(5, "Deck Subtitle", 0.78, 3.25, 10.0, 0.45, subtitle, theme, 15, subtitle_color),
-            line_xml(6, "Title Rule", 0.78, 4.0, 3.2, theme.secondary, 19050),
-            text_box(7, "Footer", 0.78, 6.95, 10.2, 0.25, footer, theme, 8, subtitle_color),
+            text_box(4, "Deck Title", 0.75, 2.28, 10.8, 0.95, title, theme, theme.title_size + 11, title_color, True, font_face=theme.title_font),
+            text_box(5, "Deck Subtitle", 0.78, 3.22, 10.0, 0.45, subtitle, theme, theme.body_size + 3, subtitle_color),
+            line_xml(6, "Title Rule", 0.78, 3.98, 3.2, theme.secondary, 19050),
+            text_box(7, "Footer", 0.78, 6.95, 10.2, 0.25, footer, theme, theme.source_size + 1, subtitle_color),
+            text_box(8, "Theme Profile Marker", 10.2, 7.25, 2.8, 0.13, f"{theme.profile} | {theme.tone} | {theme.chart_style}", theme, 1, theme.bg),
         ]
     )
     return slide_xml(parts)
@@ -225,18 +332,20 @@ def render_title(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
 def render_summary(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     bullets = slide.get("bullets", [])
-    cols = min(2, max(1, math.ceil(len(bullets) / 3)))
-    card_w = 5.85 if cols == 2 else 11.9
+    cols = 1 if theme.density == "board-readable" else min(2, max(1, math.ceil(len(bullets) / 3)))
+    card_w = (11.95 - theme.margin_x) if cols == 1 else 5.85
+    card_h = 1.02 if theme.density in {"board-readable", "consulting-medium"} else 0.84
+    row_gap = 1.24 if card_h > 0.9 else 1.02
     for idx, item in enumerate(bullets):
         col = idx % cols
         row = idx // cols
-        x = 0.58 + col * 6.05
-        y = 1.25 + row * 1.18
-        parts.append(shape_xml(sid, f"Message {idx + 1}", x, y, card_w, 0.92, theme.light, theme.rule, str(item), 13, theme.ink, False, "l", theme.font, True))
-        parts.append(shape_xml(sid + 1, f"Message Accent {idx + 1}", x, y, 0.07, 0.92, theme.secondary, None))
+        x = theme.margin_x + 0.13 + col * 6.05
+        y = theme.body_y + row * row_gap
+        parts.append(shape_xml(sid, f"Message {idx + 1}", x, y, card_w, card_h, theme.light, theme.rule, str(item), theme.body_size, theme.ink, False, "l", theme.font, theme.density != "banking-very-dense"))
+        parts.append(shape_xml(sid + 1, f"Message Accent {idx + 1}", x, y, 0.06, card_h, theme.secondary, None))
         sid += 2
     if slide.get("source"):
-        parts.append(text_box(sid, "Source", 0.58, 6.72, 11.6, 0.24, slide["source"], theme, 7, theme.muted))
+        parts.append(text_box(sid, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
@@ -244,12 +353,12 @@ def render_two_column(slide: dict[str, Any], theme: Theme, footer: str, slide_nu
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     columns = slide.get("columns", [])
     for idx, col in enumerate(columns[:2]):
-        x = 0.58 + idx * 6.1
-        parts.append(shape_xml(sid, f"Column Header {idx + 1}", x, 1.18, 5.65, 0.42, theme.primary, None, col.get("heading", ""), 13, "FFFFFF", True, "l", theme.font))
-        parts.append(shape_xml(sid + 1, f"Column Body {idx + 1}", x, 1.7, 5.65, 4.75, theme.light, theme.rule, bullet_text(col.get("bullets", [])), 12, theme.ink, False, "l", theme.font))
+        x = theme.margin_x + 0.13 + idx * 6.1
+        parts.append(shape_xml(sid, f"Column Header {idx + 1}", x, theme.body_y - 0.08, 5.65, 0.42, theme.primary, None, col.get("heading", ""), theme.body_size, "FFFFFF", True, "l", theme.font))
+        parts.append(shape_xml(sid + 1, f"Column Body {idx + 1}", x, theme.body_y + 0.44, 5.65, 4.75, theme.light, theme.rule, bullet_text(col.get("bullets", [])), theme.body_size, theme.ink, False, "l", theme.font))
         sid += 2
     if slide.get("source"):
-        parts.append(text_box(sid, "Source", 0.58, 6.72, 11.6, 0.24, slide["source"], theme, 7, theme.muted))
+        parts.append(text_box(sid, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
@@ -259,20 +368,20 @@ def render_table(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
     rows = slide.get("rows", [])
     total_rows = max(1, len(rows) + 1)
     cols = max(1, len(headers))
-    x0, y0, w, h = 0.58, 1.25, 12.0, min(5.35, 0.48 * total_rows)
+    x0, y0, w, h = theme.margin_x + 0.13, theme.body_y, 12.0 - max(0, theme.margin_x - 0.45), min(5.35, theme.table_row_h * total_rows)
     col_w = w / cols
     row_h = h / total_rows
     for c, header in enumerate(headers):
-        parts.append(shape_xml(sid, f"Header {c + 1}", x0 + c * col_w, y0, col_w, row_h, theme.primary, "FFFFFF", header, 10, "FFFFFF", True, "l", theme.font))
+        parts.append(shape_xml(sid, f"Header {c + 1}", x0 + c * col_w, y0, col_w, row_h, theme.primary, "FFFFFF", header, max(8, theme.body_size - 1), "FFFFFF", True, "l", theme.font))
         sid += 1
     for r, row in enumerate(rows):
         for c in range(cols):
             fill = "FFFFFF" if r % 2 == 0 else theme.light
             value = row[c] if c < len(row) else ""
-            parts.append(shape_xml(sid, f"Cell {r + 1}-{c + 1}", x0 + c * col_w, y0 + (r + 1) * row_h, col_w, row_h, fill, theme.rule, value, 9, theme.ink, False, "l", theme.font))
+            parts.append(shape_xml(sid, f"Cell {r + 1}-{c + 1}", x0 + c * col_w, y0 + (r + 1) * row_h, col_w, row_h, fill, theme.rule, value, max(7, theme.body_size - 2), theme.ink, False, "l", theme.font))
             sid += 1
     if slide.get("source"):
-        parts.append(text_box(sid, "Source", 0.58, 6.72, 11.6, 0.24, slide["source"], theme, 7, theme.muted))
+        parts.append(text_box(sid, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
@@ -282,7 +391,7 @@ def render_chart(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
     series = slide.get("series", [])
     values = [float(v) for s in series for v in s.get("values", []) if isinstance(v, (int, float))]
     max_v = max(values) if values else 1
-    x0, y0, chart_w, chart_h = 0.85, 1.55, 10.9, 4.45
+    x0, y0, chart_w, chart_h = theme.margin_x + 0.4, theme.body_y + 0.28, 10.9 - max(0, theme.margin_x - 0.45), 4.45
     parts.append(line_xml(sid, "Axis", x0, y0 + chart_h, chart_w, theme.rule))
     sid += 1
     group_w = chart_w / max(1, len(cats))
@@ -298,15 +407,15 @@ def render_chart(slide: dict[str, Any], theme: Theme, footer: str, slide_num: in
             by = y0 + chart_h - bh
             parts.append(shape_xml(sid, f"Bar {ci + 1}-{si + 1}", bx, by, bw, bh, colors[si % len(colors)], None))
             sid += 1
-        parts.append(text_box(sid, f"Category {ci + 1}", x0 + ci * group_w, y0 + chart_h + 0.1, group_w, 0.25, cat, theme, 8, theme.muted, False, "ctr"))
+        parts.append(text_box(sid, f"Category {ci + 1}", x0 + ci * group_w, y0 + chart_h + 0.1, group_w, 0.25, cat, theme, max(7, theme.source_size + 1), theme.muted, False, "ctr"))
         sid += 1
     legend_y = 1.12
     for si, serie in enumerate(series[:3]):
         parts.append(shape_xml(sid, f"Legend Swatch {si + 1}", 8.8 + si * 1.35, legend_y, 0.16, 0.16, colors[si % len(colors)], None))
-        parts.append(text_box(sid + 1, f"Legend {si + 1}", 9.0 + si * 1.35, legend_y - 0.02, 1.05, 0.2, serie.get("name", f"Series {si + 1}"), theme, 8, theme.muted))
+        parts.append(text_box(sid + 1, f"Legend {si + 1}", 9.0 + si * 1.35, legend_y - 0.02, 1.05, 0.2, serie.get("name", f"Series {si + 1}"), theme, max(7, theme.source_size + 1), theme.muted))
         sid += 2
     if slide.get("source"):
-        parts.append(text_box(sid, "Source", 0.58, 6.72, 11.6, 0.24, slide["source"], theme, 7, theme.muted))
+        parts.append(text_box(sid, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
@@ -316,30 +425,30 @@ def render_roadmap(slide: dict[str, Any], theme: Theme, footer: str, slide_num: 
     count = max(1, len(phases))
     col_w = 11.8 / count
     for idx, phase in enumerate(phases):
-        x = 0.7 + idx * col_w
-        parts.append(shape_xml(sid, f"Phase {idx + 1}", x, 1.5, col_w - 0.18, 0.48, theme.primary, None, phase.get("name", ""), 12, "FFFFFF", True, "ctr", theme.font))
-        parts.append(text_box(sid + 1, f"Period {idx + 1}", x, 2.08, col_w - 0.18, 0.28, phase.get("period", ""), theme, 9, theme.secondary, True, "ctr"))
-        parts.append(shape_xml(sid + 2, f"Items {idx + 1}", x, 2.48, col_w - 0.18, 2.8, theme.light, theme.rule, bullet_text(phase.get("items", [])), 10, theme.ink, False, "l", theme.font, True))
+        x = theme.margin_x + 0.25 + idx * col_w
+        parts.append(shape_xml(sid, f"Phase {idx + 1}", x, theme.body_y + 0.25, col_w - 0.18, 0.48, theme.primary, None, phase.get("name", ""), theme.body_size, "FFFFFF", True, "ctr", theme.font))
+        parts.append(text_box(sid + 1, f"Period {idx + 1}", x, theme.body_y + 0.83, col_w - 0.18, 0.28, phase.get("period", ""), theme, max(8, theme.body_size - 3), theme.secondary, True, "ctr"))
+        parts.append(shape_xml(sid + 2, f"Items {idx + 1}", x, theme.body_y + 1.23, col_w - 0.18, 2.8, theme.light, theme.rule, bullet_text(phase.get("items", [])), max(8, theme.body_size - 2), theme.ink, False, "l", theme.font, theme.density != "banking-very-dense"))
         sid += 3
     if slide.get("source"):
-        parts.append(text_box(sid, "Source", 0.58, 6.72, 11.6, 0.24, slide["source"], theme, 7, theme.muted))
+        parts.append(text_box(sid, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
 def render_section(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
     parts = [shape_xml(2, "Background", 0, 0, 13.333, 7.5, theme.primary, None)]
-    parts.append(text_box(3, "Section Title", 0.8, 3.05, 11.5, 0.85, slide.get("title", "Section"), theme, 28, "FFFFFF", True))
+    parts.append(text_box(3, "Section Title", 0.8, 3.05, 11.5, 0.85, slide.get("title", "Section"), theme, theme.title_size + 9, "FFFFFF", True, font_face=theme.title_font))
     parts.append(line_xml(4, "Rule", 0.8, 4.05, 2.3, theme.secondary, 19050))
-    parts.append(text_box(5, "Footer", 0.8, 6.95, 10.2, 0.25, footer, theme, 8, "FFFFFF"))
+    parts.append(text_box(5, "Footer", 0.8, 6.95, 10.2, 0.25, footer, theme, theme.source_size + 1, "FFFFFF"))
     return slide_xml(parts)
 
 
 def render_generic(slide: dict[str, Any], theme: Theme, footer: str, slide_num: int) -> str:
     parts, sid = base_decor(slide_num, slide.get("title", ""), footer, theme)
     body = bullet_text(slide.get("bullets", [])) if slide.get("bullets") else slide.get("body", "")
-    parts.append(shape_xml(sid, "Body", 0.7, 1.3, 11.9, 4.9, "FFFFFF", theme.rule, body, 13, theme.ink, False, "l", theme.font))
+    parts.append(shape_xml(sid, "Body", theme.margin_x + 0.25, theme.body_y, 11.9, 4.9, "FFFFFF", theme.rule, body, theme.body_size, theme.ink, False, "l", theme.font))
     if slide.get("source"):
-        parts.append(text_box(sid + 1, "Source", 0.58, 6.72, 11.6, 0.24, slide["source"], theme, 7, theme.muted))
+        parts.append(text_box(sid + 1, "Source", theme.margin_x + 0.13, 6.72, 11.6, 0.24, slide["source"], theme, theme.source_size, theme.muted))
     return slide_xml(parts)
 
 
