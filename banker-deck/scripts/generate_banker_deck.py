@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import math
 import zipfile
@@ -970,10 +971,139 @@ def app_props(slide_count: int) -> str:
 """
 
 
-def write_pptx(spec: dict[str, Any], output: Path) -> None:
-    slides = spec.get("slides") or [{"type": "title", "title": spec.get("title", "BankerDeck"), "subtitle": spec.get("subtitle", "")}]
+STYLE_CONTENT_PROFILES = {
+    "mckinsey": {
+        "deck_title": "Digital infrastructure investment priorities",
+        "subtitle_suffix": "Executive fact base and implications",
+        "footer": "BankerDeck | public-reference calibrated | McKinsey-style discussion draft",
+        "title_prefix": "",
+        "summary_title": "Power-secure digital infrastructure platforms are best positioned to capture AI-driven demand",
+        "summary_bullets": [
+            "Power availability is emerging as the primary gating constraint for AI-ready capacity growth.",
+            "Investors should prioritize platforms with contracted capacity, credible utility relationships, and clear execution paths.",
+            "Higher capital intensity can be underwritten when demand visibility and site control are both strong.",
+            "The near-term agenda is to separate structural winners from project-level development risk.",
+        ],
+        "source": "Source: Public industry sources; BankerDeck synthesis.",
+    },
+    "goldman": {
+        "deck_title": "Digital Infrastructure Sector View",
+        "subtitle_suffix": "Capital markets-style sector view",
+        "footer": "BankerDeck | public-reference calibrated | Goldman-style market discussion",
+        "title_prefix": "",
+        "summary_title": "Digital infrastructure risk / reward increasingly depends on power access, tenant quality and capex discipline",
+        "summary_bullets": [
+            "AI demand remains a constructive secular tailwind, but investable capacity is constrained by power and permitting.",
+            "Contracted backlog, counterparty quality and escalation structure should drive valuation dispersion.",
+            "Rising capex requirements increase the importance of development track record and funding flexibility.",
+            "Key diligence focus: power queue position, pre-leasing visibility, unit economics and exit comparables.",
+        ],
+        "source": "Source: Public company and industry materials; BankerDeck analysis.",
+    },
+    "cicc": {
+        "deck_title": "算力基础设施行业研究",
+        "subtitle_suffix": "行业研究框架与投资含义",
+        "footer": "BankerDeck | 公开资料校准 | 中金风格行业研究讨论稿",
+        "title_prefix": "",
+        "summary_title": "算力基础设施投资主线正从需求弹性转向电力约束、客户质量与资本开支纪律",
+        "summary_bullets": [
+            "AI 负载增长仍是行业中长期需求主线，但电力获取和审批节奏成为短期供给瓶颈。",
+            "具备电力资源、核心区位和高质量客户锁定的平台型资产更可能获得估值溢价。",
+            "资本开支上行要求投资人更重视项目回报、融资能力和建设交付确定性。",
+            "建议重点验证电力排队位置、预租约质量、单位经济性和可比交易估值区间。",
+        ],
+        "source": "资料来源：公开公司及行业资料；BankerDeck 分析。",
+    },
+}
+
+
+def transform_spec_for_theme(spec: dict[str, Any], theme: Theme) -> dict[str, Any]:
+    transformed = copy.deepcopy(spec)
+    profile = STYLE_CONTENT_PROFILES.get(theme.house)
+    if not profile:
+        return transformed
+    transformed["title"] = profile["deck_title"]
+    transformed["footer"] = profile["footer"]
+    transformed["subtitle"] = profile["subtitle_suffix"]
+    for slide in transformed.get("slides", []):
+        slide_type = slide.get("type")
+        if slide_type == "title":
+            slide["title"] = profile["deck_title"]
+            slide["subtitle"] = profile["subtitle_suffix"]
+        elif slide_type == "summary":
+            slide["title"] = profile["summary_title"]
+            slide["bullets"] = profile["summary_bullets"]
+            slide["source"] = profile["source"]
+        elif theme.house == "cicc":
+            if slide_type in {"table", "matrix"}:
+                slide["title"] = "投资判断应回到电力、需求、资本开支与退出假设的交叉验证"
+                slide["headers"] = ["研究维度", "核心验证问题", "投资含义"]
+                slide["rows"] = [
+                    ["需求", "客户预租约、负载类型、上架节奏", "决定收入兑现确定性"],
+                    ["电力", "并网排队、PPA 成本、冗余能力", "决定项目供给约束"],
+                    ["资本开支", "冷却、电气、土建成本曲线", "决定 IRR 和资金需求"],
+                    ["退出", "平台交易、资产交易、REITs 退出窗口", "决定估值区间"],
+                ]
+                slide["source"] = profile["source"]
+            elif slide_type == "chart":
+                slide["title"] = "示意测算显示 AI-ready 规格提升将推高资本开支和电力密度"
+                slide["source"] = "注：指数化示意测算。资料来源：BankerDeck 分析。"
+        elif theme.house == "goldman":
+            if slide_type in {"table", "matrix"}:
+                slide["title"] = "Underwriting should triangulate demand visibility, power access, capex and exit valuation"
+                slide["headers"] = ["Diligence area", "Key underwriting test", "Valuation implication"]
+                slide["rows"] = [
+                    ["Demand", "Pre-lease probability and tenant credit", "Supports multiple premium"],
+                    ["Power", "Queue position, PPA cost and reliability", "Frames development risk"],
+                    ["Capex", "Cooling, electrical and construction benchmarks", "Determines funding need"],
+                    ["Exit", "Platform and asset transaction comparables", "Defines valuation range"],
+                ]
+                slide["source"] = profile["source"]
+        elif theme.house == "mckinsey":
+            if slide_type in {"table", "matrix"}:
+                slide["title"] = "Four tests separate scalable platforms from one-off development risk"
+                slide["headers"] = ["Test", "What to prove", "Why it matters"]
+                slide["rows"] = [
+                    ["Power-secure", "Verified grid capacity and utility path", "Constrains near-term supply"],
+                    ["Customer-backed", "Anchor demand and pre-lease evidence", "Reduces absorption risk"],
+                    ["Capex-disciplined", "Repeatable design and cost controls", "Protects return profile"],
+                    ["Exit-ready", "Platform scarcity and buyer universe", "Supports terminal value"],
+                ]
+                slide["source"] = profile["source"]
+    return transformed
+
+
+def build_slide_xmls(spec: dict[str, Any]) -> tuple[list[str], Theme, str, dict[str, Any]]:
     theme = load_theme(spec.get("theme", "ib-classic"))
-    footer = spec.get("footer", "BankerDeck | Draft")
+    transformed = transform_spec_for_theme(spec, theme)
+    slides = transformed.get("slides") or [{"type": "title", "title": transformed.get("title", "BankerDeck"), "subtitle": transformed.get("subtitle", "")}]
+    footer = transformed.get("footer", "BankerDeck | Draft")
+    slide_xmls = [render_slide(slide, theme, footer, idx) for idx, slide in enumerate(slides, start=1)]
+    for idx, xml in enumerate(slide_xmls, start=1):
+        if "<p:sld" not in xml or "<p:spTree>" not in xml:
+            raise ValueError(f"Invalid slide XML generated for slide {idx}")
+    return slide_xmls, theme, footer, transformed
+
+
+def write_xml_bundle(spec: dict[str, Any], output_dir: Path) -> dict[str, Any]:
+    slide_xmls, theme, _footer, transformed = build_slide_xmls(spec)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    for idx, xml in enumerate(slide_xmls, start=1):
+        (output_dir / f"slide{idx}.xml").write_text(xml, encoding="utf-8")
+    (output_dir / "theme.json").write_text(
+        json.dumps(THEMES.get(spec.get("theme", "ib-classic"), THEMES["ib-classic"]), ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    (output_dir / "transformed_spec.json").write_text(
+        json.dumps(transformed, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
+    return {"slide_count": len(slide_xmls), "theme": theme.house, "output_dir": str(output_dir)}
+
+
+def write_pptx(spec: dict[str, Any], output: Path) -> None:
+    slide_xmls, theme, _footer, transformed = build_slide_xmls(spec)
+    slides = transformed.get("slides") or [{"type": "title", "title": transformed.get("title", "BankerDeck"), "subtitle": transformed.get("subtitle", "")}]
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         zf.writestr("[Content_Types].xml", content_types(len(slides)))
@@ -985,10 +1115,10 @@ def write_pptx(spec: dict[str, Any], output: Path) -> None:
         zf.writestr("ppt/slideLayouts/slideLayout1.xml", slide_layout_xml())
         zf.writestr("ppt/slideLayouts/_rels/slideLayout1.xml.rels", slide_layout_rels())
         zf.writestr("ppt/theme/theme1.xml", theme_xml(theme))
-        zf.writestr("docProps/core.xml", core_props(spec.get("title", "BankerDeck")))
+        zf.writestr("docProps/core.xml", core_props(transformed.get("title", "BankerDeck")))
         zf.writestr("docProps/app.xml", app_props(len(slides)))
-        for idx, slide in enumerate(slides, start=1):
-            zf.writestr(f"ppt/slides/slide{idx}.xml", render_slide(slide, theme, footer, idx))
+        for idx, xml in enumerate(slide_xmls, start=1):
+            zf.writestr(f"ppt/slides/slide{idx}.xml", xml)
             zf.writestr(f"ppt/slides/_rels/slide{idx}.xml.rels", slide_rels())
 
 
@@ -996,12 +1126,19 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Generate an editable BankerDeck PPTX from a JSON spec.")
     parser.add_argument("--spec", required=True, help="Path to BankerDeck JSON spec.")
     parser.add_argument("--output", required=True, help="Output .pptx path.")
+    parser.add_argument("--xml-dir", help="Optional directory for pre-PPTX slide XML and transformed spec.")
+    parser.add_argument("--theme", help="Override the spec theme, e.g. mckinsey-inspired, goldman-inspired, cicc-inspired.")
     args = parser.parse_args()
 
     spec_path = Path(args.spec)
     with spec_path.open("r", encoding="utf-8") as f:
         spec = json.load(f)
+    if args.theme:
+        spec["theme"] = args.theme
     output = Path(args.output)
+    if args.xml_dir:
+        info = write_xml_bundle(spec, Path(args.xml_dir))
+        print(f"Wrote pre-PPTX XML bundle: {info['output_dir']} ({info['slide_count']} slides)")
     write_pptx(spec, output)
     print(f"Wrote editable PPTX: {output}")
 

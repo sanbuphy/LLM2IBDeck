@@ -39,6 +39,18 @@ python3 banker-deck/scripts/generate_banker_deck.py \
   --output temp/generated/sample_market_scan.pptx
 ```
 
+Generate and inspect XML before PPTX packaging:
+
+```bash
+python3 banker-deck/scripts/generate_banker_deck.py \
+  --spec banker-deck/assets/finance_industry_research.json \
+  --theme cicc-inspired \
+  --xml-dir temp/generated/xml-first-cicc \
+  --output temp/generated/cicc_xml_first_check.pptx
+```
+
+The `--xml-dir` output contains `slide*.xml`, `theme.json`, and `transformed_spec.json`. The PPTX is packaged only after the style-specific spec has been transformed and the slide XML has been generated.
+
 Default finance examples:
 
 - `banker-deck/assets/finance_cicc_china_industry.json`
@@ -55,7 +67,7 @@ Run all bundled examples and validate the generated PPTX packages:
 python3 scripts/test_examples.py
 ```
 
-Generate same-input comparison decks for McKinsey, Goldman, and CICC profiles:
+Generate same-input comparison decks for McKinsey, Goldman, and CICC profiles. This transforms content and writes pre-PPTX XML before packaging each deck:
 
 ```bash
 python3 scripts/compare_named_styles.py
