@@ -6,7 +6,8 @@ This repository contains the `banker-deck` Codex skill:
 
 - `banker-deck/SKILL.md`: skill trigger and operating workflow.
 - `banker-deck/references/`: investment banking deck workflow, themes, slide modules, reference library, cases, and generator schema.
-- `banker-deck/scripts/generate_banker_deck.py`: JSON spec to editable `.pptx` generator.
+- `banker-deck/scripts/generate_real_deck.mjs`: artifact-tool production path with preview and layout QA.
+- `banker-deck/scripts/generate_banker_deck.py`: XML-first fallback/smoke generator.
 - `banker-deck/assets/*.json`: bundled sample deck specs.
 
 Naming note: the product/display name is `BankerDeck`, while the Codex skill folder and skill name are lowercase `banker-deck`. Do not use `ibdack`; that is a typo and will not match the skill metadata.
@@ -30,7 +31,25 @@ Use $banker-deck to create an editable investment banking PPTX on a healthcare S
 
 ## Generate
 
-Generate a single sample deck into `temp/generated/`:
+Generate a production-path demo with editable PPTX, slide previews, layout JSON, and contact sheet:
+
+```bash
+node banker-deck/scripts/generate_real_deck.mjs
+```
+
+By default this generates all three public-reference calibrated named profiles under `temp/real-deck/`:
+
+- `mckinsey-inspired`
+- `goldman-inspired`
+- `cicc-inspired`
+
+Generate a single named production-path theme:
+
+```bash
+node banker-deck/scripts/generate_real_deck.mjs --theme goldman-inspired
+```
+
+Generate a single fallback XML-smoke sample deck into `temp/generated/`:
 
 ```bash
 mkdir -p temp/generated
@@ -65,6 +84,12 @@ Run all bundled examples and validate the generated PPTX packages:
 
 ```bash
 python3 scripts/test_examples.py
+```
+
+Run the production renderer test for McKinsey, Goldman, and CICC profiles. This generates editable PPTX files, PNG previews, contact sheets, and layout JSON under `temp/real-deck/`, then checks package XML and style-specific text/layout signals:
+
+```bash
+python3 scripts/test_real_decks.py
 ```
 
 Generate same-input comparison decks for McKinsey, Goldman, and CICC profiles. This transforms content and writes pre-PPTX XML before packaging each deck:
