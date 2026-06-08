@@ -9,6 +9,8 @@ This repository contains the `ibdeck` Codex skill:
 - `ibdeck/scripts/generate_ibdeck.py`: JSON spec to editable `.pptx` generator.
 - `ibdeck/assets/*.json`: bundled sample deck specs.
 
+Naming note: the product/display name is `IBDeck`, while the Codex skill folder and skill name are lowercase `ibdeck`. Do not use `ibdack`; that is a typo and will not match the skill metadata.
+
 ## Install
 
 For local development in this repository, use the skill directly from `ibdeck/`.
