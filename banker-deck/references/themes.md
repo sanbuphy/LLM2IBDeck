@@ -22,6 +22,18 @@ For named institution-inspired profiles, match these dimensions as closely as po
 - Banker/consultant tone: action titles, source-forward footers, quantified claims, diligence language.
 - Deck rhythm: title page, executive summary, analysis modules, recommendation/next steps, appendix.
 
+## Near 1:1 Mapping Feel
+
+For requests that explicitly ask for a near 1:1 feel, do not rely on the default theme alone. First use `style-calibration.md` to build a style map from public references, then adapt the generated deck until a reviewer would recognize the requested house style from layout grammar, density, and tone even without logos.
+
+Score the result against:
+
+- Does the first slide have the expected title/footer rhythm?
+- Do analysis slides use the expected density and exhibit balance?
+- Do tables and charts feel native to the requested style rather than generic PowerPoint?
+- Do action titles sound like the requested institution's public writing style?
+- Do source notes and caveats appear in the expected position and wording pattern?
+
 ## Theme IDs
 
 ### ib-classic

@@ -15,15 +15,17 @@ Use BankerDeck to turn a business, finance, market, industry, company, or transa
 2. Build the story first: situation, key question, answer, supporting analyses, implications, and recommendation.
 3. Select slide modules from `references/slide-modules.md`; prefer modules that fit the evidence available.
 4. Select a theme from `references/themes.md`; default to `ib-classic` unless the user asks for another style.
-5. Create a page-by-page plan with page title, main message, visual module, content bullets, required data, and source notes.
-6. If generating a PPTX, write a JSON spec and run `scripts/generate_banker_deck.py`.
-7. Review the output for editability, hierarchy, consistent titles, source notes, and slide-to-slide narrative flow.
+5. For named institution styles or "near 1:1 mapping" requests, read `references/style-calibration.md`, search public references, extract a style map, and post-process layout/tone choices before generating.
+6. Create a page-by-page plan with page title, main message, visual module, content bullets, required data, and source notes.
+7. If generating a PPTX, write a JSON spec and run `scripts/generate_banker_deck.py`.
+8. Review the output for editability, hierarchy, consistent titles, source notes, and slide-to-slide narrative flow.
 
 ## Reference Map
 
 - `references/workflow.md`: detailed topic understanding, storyline, outline, and quality checks.
 - `references/slide-modules.md`: reusable IB slide patterns and when to use each.
 - `references/themes.md`: default and optional house-style-inspired themes.
+- `references/style-calibration.md`: near 1:1 public-reference style mapping workflow for named themes.
 - `references/reference-library.md`: recommended sources and citation/source-note patterns.
 - `references/cases.md`: example user prompts, interpretation, outline, and generation approach.
 - `references/spec-schema.md`: JSON spec fields accepted by the generator.
@@ -55,7 +57,7 @@ The generator creates a real `.pptx` package using editable PowerPoint XML objec
 
 ## Theme Selection
 
-Default to `ib-classic`. Offer optional style directions from `themes.md`: `mckinsey-inspired`, `goldman-inspired`, `cicc-inspired`, `boutique-dark`, and `board-clean`. These are inspired visual systems, not official templates or brand assets.
+Default to `ib-classic`. Offer optional style directions from `themes.md`: `mckinsey-inspired`, `goldman-inspired`, `cicc-inspired`, `boutique-dark`, and `board-clean`. These are high-fidelity inspired visual systems, not official templates or brand assets. For McKinsey, Goldman, CICC, or any named institution style, always calibrate from public references first.
 
 ## Typical Requests
 

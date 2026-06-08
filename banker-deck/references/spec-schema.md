@@ -76,3 +76,5 @@ Bundled example specs live in `banker-deck/assets/`:
 - `finance_ipo_investor_update.json`
 - `finance_industry_research.json`
 - `finance_cicc_china_industry.json`
+
+For named institution styles, read `style-calibration.md` before writing the spec so the slide module choices, tone, density, and source language match the requested public-reference style map.
