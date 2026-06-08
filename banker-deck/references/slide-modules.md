@@ -1,4 +1,4 @@
-# IBDeck Slide Modules
+# BankerDeck Slide Modules
 
 Use these modules as reusable building blocks.
 

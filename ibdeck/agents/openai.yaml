@@ -1,4 +1,0 @@
-interface:
-  display_name: "IBDeck"
-  short_description: "Editable investment banking PPT decks."
-  default_prompt: "Use $ibdeck to create an editable investment banking-style PPT deck."

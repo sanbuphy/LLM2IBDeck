@@ -1,4 +1,4 @@
-# IBDeck Reference Library
+# BankerDeck Reference Library
 
 Use this as a source planning guide. Browse or fetch current data when facts may have changed.
 
@@ -26,11 +26,11 @@ Use this as a source planning guide. Browse or fetch current data when facts may
 
 Short source footer format:
 
-`Source: Company filings; industry association; IBDeck analysis.`
+`Source: Company filings; industry association; BankerDeck analysis.`
 
 For charts:
 
-`Note: Market size in nominal USD; 2026E-2030E based on stated assumptions. Source: [sources]; IBDeck analysis.`
+`Note: Market size in nominal USD; 2026E-2030E based on stated assumptions. Source: [sources]; BankerDeck analysis.`
 
 For placeholders:
 
@@ -39,7 +39,7 @@ For placeholders:
 ## Data Hygiene
 
 - Show units and period on every quantitative exhibit.
-- Distinguish reported data, estimated data, and IBDeck analysis.
+- Distinguish reported data, estimated data, and BankerDeck analysis.
 - Avoid implying proprietary data access unless the user provided it.
 - For recent prices, leaders, laws, forecasts, and market statistics, verify with current sources.
 

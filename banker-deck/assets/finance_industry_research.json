@@ -1,8 +1,8 @@
 {
   "title": "Digital Infrastructure Industry Research",
-  "subtitle": "Illustrative sector primer generated with IBDeck",
+  "subtitle": "Illustrative sector primer generated with BankerDeck",
   "theme": "mckinsey-inspired",
-  "footer": "IBDeck | Industry research draft",
+  "footer": "BankerDeck | Industry research draft",
   "slides": [
     {
       "type": "title",
@@ -18,7 +18,7 @@
         "Contract quality and customer concentration will drive valuation dispersion.",
         "Investors should separate platform scarcity value from project-level development risk."
       ],
-      "source": "Source: Public industry sources; IBDeck analysis."
+      "source": "Source: Public industry sources; BankerDeck analysis."
     },
     {
       "type": "matrix",
@@ -30,7 +30,7 @@
         ["Contract quality", "Tenant credit, term, escalators, utilization", "Separates durable cash flows"],
         ["Platform scale", "Land bank, utility relationships, development team", "Supports premium valuation"]
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     },
     {
       "type": "chart",
@@ -41,7 +41,7 @@
         {"name": "Capex index", "values": [100, 135, 180]},
         {"name": "Power density index", "values": [100, 160, 260]}
       ],
-      "source": "Note: Indexed illustrative view. Source: IBDeck analysis."
+      "source": "Note: Indexed illustrative view. Source: BankerDeck analysis."
     },
     {
       "type": "table",
@@ -53,7 +53,7 @@
         ["Capex", "Cooling, electrical, construction cost benchmarks", "Development budget"],
         ["Exit", "Comparable platform and asset transactions", "Valuation range"]
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     }
   ]
 }

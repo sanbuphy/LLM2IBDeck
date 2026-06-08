@@ -1,0 +1,4 @@
+interface:
+  display_name: "BankerDeck"
+  short_description: "Editable investment banking PPT decks."
+  default_prompt: "Use $banker-deck to create an editable investment banking-style PPT deck."

@@ -1,8 +1,8 @@
 {
   "title": "AI Data Centers in Southeast Asia",
-  "subtitle": "Illustrative market scan generated with IBDeck",
+  "subtitle": "Illustrative market scan generated with BankerDeck",
   "theme": "ib-classic",
-  "footer": "IBDeck | Draft for discussion",
+  "footer": "BankerDeck | Draft for discussion",
   "slides": [
     {
       "type": "title",
@@ -18,7 +18,7 @@
         "Investors should prioritize sites with contracted power, credible cooling design, and cloud/customer pre-commitments.",
         "Key diligence gaps include grid queue position, land title, water access, and renewable procurement economics."
       ],
-      "source": "Source: Public industry sources; company disclosures; IBDeck analysis."
+      "source": "Source: Public industry sources; company disclosures; BankerDeck analysis."
     },
     {
       "type": "chart",
@@ -29,7 +29,7 @@
         {"name": "Base demand", "values": [1.2, 1.6, 2.1, 2.7, 3.3]},
         {"name": "AI upside", "values": [0.2, 0.5, 0.9, 1.3, 1.8]}
       ],
-      "source": "Note: Illustrative GW demand scenario. Source: IBDeck analysis."
+      "source": "Note: Illustrative GW demand scenario. Source: BankerDeck analysis."
     },
     {
       "type": "matrix",
@@ -41,7 +41,7 @@
         ["Policy support", "Data sovereignty, tax incentives, permitting", "Avoid timing risk"],
         ["Customer demand", "Anchor tenant pipeline and pre-leasing", "Reduce build-out speculation"]
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     },
     {
       "type": "roadmap",
@@ -51,7 +51,7 @@
         {"name": "Validate", "period": "Week 3-4", "items": ["Engage utilities and landowners", "Test anchor customer demand"]},
         {"name": "Decide", "period": "Week 5-6", "items": ["Compare economics", "Select entry route and partner shortlist"]}
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     }
   ]
 }

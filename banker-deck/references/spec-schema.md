@@ -1,4 +1,4 @@
-# IBDeck JSON Spec Schema
+# BankerDeck JSON Spec Schema
 
 The generator accepts a JSON file with this structure.
 
@@ -69,7 +69,7 @@ The generator accepts a JSON file with this structure.
 
 Unknown slide types fall back to a generic content slide with title and bullets.
 
-Bundled example specs live in `ibdeck/assets/`:
+Bundled example specs live in `banker-deck/assets/`:
 
 - `sample_market_scan.json`
 - `finance_mna_target_profile.json`

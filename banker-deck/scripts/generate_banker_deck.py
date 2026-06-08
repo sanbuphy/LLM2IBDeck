@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate editable investment-banking-style PPTX files from an IBDeck JSON spec."""
+"""Generate editable investment-banking-style PPTX files from an BankerDeck JSON spec."""
 
 from __future__ import annotations
 
@@ -487,9 +487,9 @@ def slide_layout_rels() -> str:
 
 def theme_xml(theme: Theme) -> str:
     return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<a:theme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="IBDeck">
+<a:theme xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" name="BankerDeck">
   <a:themeElements>
-    <a:clrScheme name="IBDeck">
+    <a:clrScheme name="BankerDeck">
       <a:dk1><a:srgbClr val="{theme.ink}"/></a:dk1><a:lt1><a:srgbClr val="{theme.bg}"/></a:lt1>
       <a:dk2><a:srgbClr val="{theme.primary}"/></a:dk2><a:lt2><a:srgbClr val="{theme.light}"/></a:lt2>
       <a:accent1><a:srgbClr val="{theme.primary}"/></a:accent1><a:accent2><a:srgbClr val="{theme.secondary}"/></a:accent2>
@@ -497,8 +497,8 @@ def theme_xml(theme: Theme) -> str:
       <a:accent5><a:srgbClr val="{theme.rule}"/></a:accent5><a:accent6><a:srgbClr val="{theme.light}"/></a:accent6>
       <a:hlink><a:srgbClr val="{theme.secondary}"/></a:hlink><a:folHlink><a:srgbClr val="{theme.muted}"/></a:folHlink>
     </a:clrScheme>
-    <a:fontScheme name="IBDeck"><a:majorFont><a:latin typeface="{safe_text(theme.font)}"/></a:majorFont><a:minorFont><a:latin typeface="{safe_text(theme.font)}"/></a:minorFont></a:fontScheme>
-    <a:fmtScheme name="IBDeck"><a:fillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:fillStyleLst><a:lnStyleLst><a:ln w="9525"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln></a:lnStyleLst><a:effectStyleLst><a:effectStyle><a:effectLst/></a:effectStyle></a:effectStyleLst><a:bgFillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:bgFillStyleLst></a:fmtScheme>
+    <a:fontScheme name="BankerDeck"><a:majorFont><a:latin typeface="{safe_text(theme.font)}"/></a:majorFont><a:minorFont><a:latin typeface="{safe_text(theme.font)}"/></a:minorFont></a:fontScheme>
+    <a:fmtScheme name="BankerDeck"><a:fillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:fillStyleLst><a:lnStyleLst><a:ln w="9525"><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:ln></a:lnStyleLst><a:effectStyleLst><a:effectStyle><a:effectLst/></a:effectStyle></a:effectStyleLst><a:bgFillStyleLst><a:solidFill><a:schemeClr val="phClr"/></a:solidFill></a:bgFillStyleLst></a:fmtScheme>
   </a:themeElements>
 </a:theme>
 """
@@ -512,8 +512,8 @@ def core_props(title: str) -> str:
                    xmlns:dcmitype="http://purl.org/dc/dcmitype/"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <dc:title>{safe_text(title)}</dc:title>
-  <dc:creator>IBDeck</dc:creator>
-  <cp:lastModifiedBy>IBDeck</cp:lastModifiedBy>
+  <dc:creator>BankerDeck</dc:creator>
+  <cp:lastModifiedBy>BankerDeck</cp:lastModifiedBy>
 </cp:coreProperties>
 """
 
@@ -522,7 +522,7 @@ def app_props(slide_count: int) -> str:
     return f"""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
             xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes">
-  <Application>IBDeck</Application>
+  <Application>BankerDeck</Application>
   <PresentationFormat>On-screen Show (16:9)</PresentationFormat>
   <Slides>{slide_count}</Slides>
 </Properties>
@@ -530,9 +530,9 @@ def app_props(slide_count: int) -> str:
 
 
 def write_pptx(spec: dict[str, Any], output: Path) -> None:
-    slides = spec.get("slides") or [{"type": "title", "title": spec.get("title", "IBDeck"), "subtitle": spec.get("subtitle", "")}]
+    slides = spec.get("slides") or [{"type": "title", "title": spec.get("title", "BankerDeck"), "subtitle": spec.get("subtitle", "")}]
     theme = load_theme(spec.get("theme", "ib-classic"))
-    footer = spec.get("footer", "IBDeck | Draft")
+    footer = spec.get("footer", "BankerDeck | Draft")
     output.parent.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(output, "w", compression=zipfile.ZIP_DEFLATED) as zf:
         zf.writestr("[Content_Types].xml", content_types(len(slides)))
@@ -544,7 +544,7 @@ def write_pptx(spec: dict[str, Any], output: Path) -> None:
         zf.writestr("ppt/slideLayouts/slideLayout1.xml", slide_layout_xml())
         zf.writestr("ppt/slideLayouts/_rels/slideLayout1.xml.rels", slide_layout_rels())
         zf.writestr("ppt/theme/theme1.xml", theme_xml(theme))
-        zf.writestr("docProps/core.xml", core_props(spec.get("title", "IBDeck")))
+        zf.writestr("docProps/core.xml", core_props(spec.get("title", "BankerDeck")))
         zf.writestr("docProps/app.xml", app_props(len(slides)))
         for idx, slide in enumerate(slides, start=1):
             zf.writestr(f"ppt/slides/slide{idx}.xml", render_slide(slide, theme, footer, idx))
@@ -552,8 +552,8 @@ def write_pptx(spec: dict[str, Any], output: Path) -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Generate an editable IBDeck PPTX from a JSON spec.")
-    parser.add_argument("--spec", required=True, help="Path to IBDeck JSON spec.")
+    parser = argparse.ArgumentParser(description="Generate an editable BankerDeck PPTX from a JSON spec.")
+    parser.add_argument("--spec", required=True, help="Path to BankerDeck JSON spec.")
     parser.add_argument("--output", required=True, help="Output .pptx path.")
     args = parser.parse_args()
 

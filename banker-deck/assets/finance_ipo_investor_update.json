@@ -1,8 +1,8 @@
 {
   "title": "IPO Readiness Investor Update",
-  "subtitle": "Illustrative equity story and readiness deck generated with IBDeck",
+  "subtitle": "Illustrative equity story and readiness deck generated with BankerDeck",
   "theme": "board-clean",
-  "footer": "IBDeck | IPO readiness discussion draft",
+  "footer": "BankerDeck | IPO readiness discussion draft",
   "slides": [
     {
       "type": "title",
@@ -18,7 +18,7 @@
         "Public-company readiness should focus on forecasting cadence, KPI definitions, and control maturity.",
         "Optimal timeline depends on two additional quarters of predictable growth and improved cash conversion."
       ],
-      "source": "Source: Management placeholders; IBDeck analysis."
+      "source": "Source: Management placeholders; BankerDeck analysis."
     },
     {
       "type": "two_column",
@@ -43,7 +43,7 @@
           ]
         }
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     },
     {
       "type": "chart",
@@ -54,7 +54,7 @@
         {"name": "Revenue growth %", "values": [42, 34, 28, 24]},
         {"name": "EBITDA margin %", "values": [-8, 2, 10, 17]}
       ],
-      "source": "Note: Illustrative forecast. Source: IBDeck analysis."
+      "source": "Note: Illustrative forecast. Source: BankerDeck analysis."
     },
     {
       "type": "roadmap",
@@ -64,7 +64,7 @@
         {"name": "Build", "period": "1-3 months", "items": ["Codify KPI definitions", "Prepare analyst education materials"]},
         {"name": "Launch-ready", "period": "3-6 months", "items": ["Test forecast cadence", "Begin investor education when market window supports"]}
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     }
   ]
 }

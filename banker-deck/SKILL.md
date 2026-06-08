@@ -1,13 +1,13 @@
 ---
-name: ibdeck
+name: banker-deck
 description: Generate editable investment banking-style PowerPoint decks and supporting outlines for financial analysis, industry research, investor presentations, pitch books, management presentations, market maps, company profiles, transaction overviews, and board-style materials. Use when Codex needs to create a PPT/PPTX, deck outline, page-by-page content plan, investment banking slide narrative, source/reference plan, or themed consulting/investment-bank deliverable with editable XML PowerPoint output.
 ---
 
-# IBDeck
+# BankerDeck
 
 ## Overview
 
-Use IBDeck to turn a business, finance, market, industry, company, or transaction topic into a standard investment banking deliverable. Produce either a structured outline/content plan or an editable `.pptx` generated from a JSON spec using PowerPoint-native text boxes, shapes, tables, and charts.
+Use BankerDeck to turn a business, finance, market, industry, company, or transaction topic into a standard investment banking deliverable. Produce either a structured outline/content plan or an editable `.pptx` generated from a JSON spec using PowerPoint-native text boxes, shapes, tables, and charts.
 
 ## Core Workflow
 
@@ -16,7 +16,7 @@ Use IBDeck to turn a business, finance, market, industry, company, or transactio
 3. Select slide modules from `references/slide-modules.md`; prefer modules that fit the evidence available.
 4. Select a theme from `references/themes.md`; default to `ib-classic` unless the user asks for another style.
 5. Create a page-by-page plan with page title, main message, visual module, content bullets, required data, and source notes.
-6. If generating a PPTX, write a JSON spec and run `scripts/generate_ibdeck.py`.
+6. If generating a PPTX, write a JSON spec and run `scripts/generate_banker_deck.py`.
 7. Review the output for editability, hierarchy, consistent titles, source notes, and slide-to-slide narrative flow.
 
 ## Reference Map
@@ -36,9 +36,9 @@ Use the generator when the user asks for a concrete deck file.
 
 ```bash
 mkdir -p temp/generated
-python3 ibdeck/scripts/generate_ibdeck.py \
-  --spec ibdeck/assets/sample_market_scan.json \
-  --output temp/generated/ibdeck_market_scan.pptx
+python3 banker-deck/scripts/generate_banker_deck.py \
+  --spec banker-deck/assets/sample_market_scan.json \
+  --output temp/generated/banker-deck_market_scan.pptx
 ```
 
 The generator creates a real `.pptx` package using editable PowerPoint XML objects. Do not rasterize slides into images unless the user explicitly asks for image-only output.
@@ -59,7 +59,7 @@ Default to `ib-classic`. Offer optional style directions from `themes.md`: `mcki
 
 ## Typical Requests
 
-- "Use IBDeck to create a 12-page market entry deck for AI data centers in Southeast Asia."
+- "Use BankerDeck to create a 12-page market entry deck for AI data centers in Southeast Asia."
 - "Generate a Goldman-style editable PPTX about a potential acquisition of a SaaS company."
 - "Create the outline and page content references for an investor presentation on GLP-1 supply chain opportunities."
 - "Build a CICC-style industry research deck in Chinese for humanoid robotics."

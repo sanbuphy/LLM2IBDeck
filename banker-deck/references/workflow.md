@@ -1,4 +1,4 @@
-# IBDeck Workflow
+# BankerDeck Workflow
 
 ## 1. Interpret the Topic
 

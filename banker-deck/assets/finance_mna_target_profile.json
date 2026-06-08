@@ -1,8 +1,8 @@
 {
   "title": "Vertical SaaS M&A Target Profile",
-  "subtitle": "Illustrative acquisition screening deck generated with IBDeck",
+  "subtitle": "Illustrative acquisition screening deck generated with BankerDeck",
   "theme": "goldman-inspired",
-  "footer": "IBDeck | Illustrative M&A analysis",
+  "footer": "BankerDeck | Illustrative M&A analysis",
   "slides": [
     {
       "type": "title",
@@ -18,7 +18,7 @@
         "Strategic fit depends on integration feasibility, data interoperability, and channel overlap.",
         "Key diligence focus should be cohort retention, net revenue expansion, churn concentration, and security posture."
       ],
-      "source": "Source: Company materials placeholder; public market data; IBDeck analysis."
+      "source": "Source: Company materials placeholder; public market data; BankerDeck analysis."
     },
     {
       "type": "table",
@@ -30,7 +30,7 @@
         ["EBITDA margin", "8%", "14%", "20%", "Scaling S&M and G&A"],
         ["Net revenue retention", "118%", "121%", "123%", "Expansion-led growth"]
       ],
-      "source": "Note: Illustrative figures. Source: IBDeck analysis."
+      "source": "Note: Illustrative figures. Source: BankerDeck analysis."
     },
     {
       "type": "matrix",
@@ -42,7 +42,7 @@
         ["Compliance", "Are HIPAA/SOC2 controls audit-ready?", "Avoids closing and integration delays"],
         ["Product integration", "How modern are APIs and data models?", "Determines synergy capture timing"]
       ],
-      "source": "Source: IBDeck analysis."
+      "source": "Source: BankerDeck analysis."
     },
     {
       "type": "chart",
@@ -53,7 +53,7 @@
         {"name": "EV / Revenue", "values": [5.5, 7.0, 8.5]},
         {"name": "EV / ARR", "values": [5.0, 6.5, 8.0]}
       ],
-      "source": "Note: Illustrative multiple range only. Source: IBDeck analysis."
+      "source": "Note: Illustrative multiple range only. Source: BankerDeck analysis."
     }
   ]
 }

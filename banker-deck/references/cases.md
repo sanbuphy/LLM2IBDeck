@@ -1,10 +1,10 @@
-# IBDeck Cases
+# BankerDeck Cases
 
 ## Case 1: Market Entry Deck
 
 User input:
 
-`Use IBDeck to create a 12-page deck on whether a US renewable developer should enter the Vietnam battery storage market.`
+`Use BankerDeck to create a 12-page deck on whether a US renewable developer should enter the Vietnam battery storage market.`
 
 Interpretation:
 
@@ -66,7 +66,7 @@ Generation approach:
 
 User input:
 
-`帮我用 IBDeck 做一个中金风格的人形机器人产业链研究 PPT 大纲。`
+`帮我用 BankerDeck 做一个中金风格的人形机器人产业链研究 PPT 大纲。`
 
 Interpretation:
 
