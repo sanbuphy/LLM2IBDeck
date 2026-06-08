@@ -2,6 +2,16 @@
 
 Themes are inspired by common consulting and investment banking deliverable patterns. They are not official brand templates and must not use proprietary logos or assets unless the user provides them.
 
+## Public Reference Basis
+
+Use public references as directional inputs, then adapt into original IBDeck themes:
+
+- McKinsey: public firm materials describe a refreshed visual identity with high contrast, prominent blue, a bespoke typeface, and revamped data visualization and photography.
+- Goldman Sachs: public brand guidance says the blue version of the Goldman Sachs signature should be used wherever possible; public investor materials emphasize a restrained institutional presentation style.
+- CICC: public annual reports and investor materials are table-forward, formal, and financial-data dense; public identity materials commonly present CICC with red/gold cues.
+
+Do not copy official templates, logos, marks, or proprietary layouts. Treat these as style references for theme calibration only.
+
 ## Theme IDs
 
 ### ib-classic
@@ -57,4 +67,3 @@ Board and management discussion style.
 - Typography: readable, restrained.
 - Best for: board updates, executive memos, decision papers.
 - Style: fewer elements, larger text, clear recommendation boxes.
-

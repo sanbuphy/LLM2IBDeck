@@ -75,3 +75,4 @@ Bundled example specs live in `ibdeck/assets/`:
 - `finance_mna_target_profile.json`
 - `finance_ipo_investor_update.json`
 - `finance_industry_research.json`
+- `finance_cicc_china_industry.json`

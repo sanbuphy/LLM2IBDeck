@@ -41,6 +41,7 @@ python3 ibdeck/scripts/generate_ibdeck.py \
 
 Default finance examples:
 
+- `ibdeck/assets/finance_cicc_china_industry.json`
 - `ibdeck/assets/finance_mna_target_profile.json`
 - `ibdeck/assets/finance_ipo_investor_update.json`
 - `ibdeck/assets/finance_industry_research.json`
@@ -54,4 +55,10 @@ Run all bundled examples and validate the generated PPTX packages:
 python3 scripts/test_examples.py
 ```
 
-The test writes generated decks only under `temp/generated/`. `temp/` and `output/` are ignored by Git so runtime artifacts do not get committed.
+The test writes generated decks only under `temp/generated/`. It validates:
+
+- every bundled example spec in `ibdeck/assets/`
+- every built-in theme, including `mckinsey-inspired`, `goldman-inspired`, and `cicc-inspired`
+- PPTX package structure, slide count, and XML parseability
+
+`temp/` and `output/` are ignored by Git so runtime artifacts do not get committed.
